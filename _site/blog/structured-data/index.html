@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title> Structured data -  hop.ie</title>
+    <meta name="description" content="I, for one, welcome our robot overlords.">
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="/stylesheets/screen.css">
+    
+
+    
+
+    <!--[if IE]>
+      <link rel="stylesheet" href="/stylesheets/ie.css">
+    <![endif]-->
+    <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular" rel="stylesheet" type="text/css">
+    <link href='http://fonts.googleapis.com/css?family=Source+Code+Pro' rel="stylesheet" type="text/css">
+    <link rel="canonical" href="/blog/structured-data">
+    <meta name="google-site-verification" content="4b2gG2_kr5STLh0RhE34iPvU59o591CoG9N6iYOazvw" />
+    <script src="/javascripts/modernizr.js"></script>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script src="http://d3js.org/queue.v1.min.js"></script>
+</head>
+<body >
+  <div class="page-container">
+  	<header>
+  	</header>
+
+  	<div class="page clearfix">
+    	<section class="content">
+    		<article>
+
+	<header>
+	  <h1>Structured data</h1>
+	  <p class="date">October 29, 2012</p>
+	</header>
+
+	<section class="entry"><p>In June, 2011, Google, Bing and Yahoo! <a href='http://googlewebmastercentral.blogspot.ie/2011/06/introducing-schemaorg-search-engines.html'>unveiled</a> the website <a href='http://schema.org'>schema.org</a>. The intent was to introduce &#8220;a common set of schemas for structured data markup on web pages&#8221;. After leaving it for a year to see if it was going to stick around, it was time to add it to my <a href='http://www.shopireland.ie'>irish shopping website</a>.</p>
+
+<h2 id='microdata'>Microdata</h2>
+
+<p>Schema.org brings a set of recommendations for adding extra descriptive data to your website. This takes the form of <a href='http://en.wikipedia.org/wiki/Microdata_(HTML)'>microdata</a>. This microdata takes the form of attributes in your HTML, and is used to allow search engines to better understand what the data is.</p>
+
+<p>An example of how this works is in describing the name of a movie. You might have the following heading in your HTML:</p>
+
+<pre><code>&lt;h1&gt;Plan 9 from Outer Space&lt;/h1&gt;</code></pre>
+
+<p>This might be useful to humans, who would see it in context of a web page describing a movie and know what that implied, but a search engine would not. Instead you would add microdata to tell the search engine that it is in fact a name:</p>
+
+<pre><code>&lt;h1 itemprop=&quot;name&quot;&gt;Plan 9 from Outer Space&lt;/h1&gt;</code></pre>
+
+<p>The search engine would be able to evaluate this as the name of the item described, and not just a page section or title.</p>
+
+<h2 id='uses'>Uses</h2>
+
+<p>While there might be many potential uses for this info, the most common is its use by Google and other search engines in creating richer search results. You can describe items such as a product&#8217;s name, author, director, or price, and the search engine would then be able to display this in a more rich search result. Google also uses this data when generating it&#8217;s <a href='http://www.google.com/shopping'>Google Shopping</a> service.</p>
+
+<p>Potential uses could go much further with any online catalogue being able to use spiders to go out and collect descriptive, useful data from across the web and collate it in one place.</p>
+
+<h2 id='realworld_example'>Real-world example</h2>
+
+<p>To make use of this, I decided to put some of the microdata into place on my shop. The schema.org website provides a great <a href='http://schema.org/docs/gs.html'>introduction here</a>. The first step was to begin with a block of markup describing a product. Here&#8217;s the data that I need to describe from the classic movie <a href='/B00005KH0Y/'>Plan 9 From Outer Space</a></p>
+
+<pre><code>Plan 9 From Outer Space [DVD]
+starring:
+  Bela Lugosi,
+  Tom Keene,
+  Mona McKinnon,
+  Duke Moore,
+  Vampira
+Image: http://ecx.images-amazon.com/images/I/51iqYZ3qQaL._SL160_.jpg
+Our Price: €15.95
+Availability: Usually dispatched within 24 hours
+Publisher: MPIC Video
+Release date:11th April, 2009</code></pre>
+
+<p>To describe the above data, I would usually wrap it in plain HTML. The above if described in HTML might look something like this:</p>
+
+<pre><code>&lt;h2&gt;Plan 9 From Outer Space [DVD]
+  starring:
+  &lt;a href=&quot;/search/Bela+Lugosi/&quot;&gt;Bela Lugosi&lt;/a&gt;,
+  &lt;a href=&quot;/search/Tom+Keene/&quot;&gt;Tom Keene&lt;/a&gt;,
+  &lt;a href=&quot;/search/Mona+McKinnon/&quot;&gt;Mona McKinnon&lt;/a&gt;,
+  &lt;a href=&quot;/search/Duke+Moore/&quot;&gt;Duke Moore&lt;/a&gt;,
+  &lt;a href=&quot;/search/Vampira/&quot;&gt;Vampira&lt;/a&gt;
+&lt;/h2&gt;
+&lt;img src=&quot;http://ecx.images-amazon.com/images/I/51iqYZ3qQaL._SL160_.jpg&quot; /&gt;
+&lt;p&gt;Our Price: &amp;euro;15.95&lt;/p&gt;
+&lt;p&gt;Availability: Usually dispatched within 24 hours&lt;/p&gt;
+&lt;p&gt;Publisher: MPIC Video&lt;/p&gt;
+&lt;p&gt;Release date: 11th April, 2009&lt;/p&gt;</code></pre>
+
+<p>Using titles and paragraphs would be fine for humans to understand, but search engines won&#8217;t know that one paragraph describes the price, and another the availability.</p>
+
+<p>We can use microdata to label the movie name and other meta data such as the item&#8217;s URL, the price&#8217;s currency, and even whether it&#8217;s in stock.</p>
+
+<p>The first step is to wrap the item in a container that defined its scope. Scheme has a <a href='http://schema.org/docs/full.html'>long list</a> of schemes that can apply, but for this one I&#8217;ll be using &#8221;<a href='http://schema.org/Movie'>Movie</a>&#8221;.</p>
+
+<pre><code>&lt;div itemscope itemscheme=&quot;http://schema.org/Movie&quot;&gt;
+  ... content here
+&lt;/div&gt;</code></pre>
+
+<p>This tells the search engine that everything contained within will match the scheme provided at <code>http://schema.org/Movie</code>. Next, I add in some meta data and describe the name of the movie.</p>
+
+<pre><code>&lt;div itemscope itemscheme=&quot;http://schema.org/Movie&quot;&gt;
+  &lt;link itemprop=&quot;url&quot; href=&quot;full_url&quot; /&gt;
+  &lt;h2&gt;&lt;span itemprop=&quot;name&quot;&gt;Plan 9 From Outer Space [DVD]&lt;/span&gt;&lt;/h2&gt;
+&lt;/div&gt;</code></pre>
+
+<p>The &#8220;itemprop&#8221; attribute is used to label the contents as being certain properties of the item. In this case, the &#8220;link&#8221; tag is used to describe the URL. The movie name is described using &#8220;itemprop=name&#8221;. Next I add in the actors, image and other data.</p>
+
+<pre><code>&lt;div itemscope itemscheme=&quot;http://schema.org/Movie&quot;&gt;
+  &lt;link itemprop=&quot;url&quot; href=&quot;full_url&quot; /&gt;
+  &lt;h2&gt;&lt;span itemprop=&quot;name&quot;&gt;Plan 9 From Outer Space [DVD]&lt;/span&gt;
+      starring:
+      &lt;a href=&quot;/search/Bela+Lugosi/&quot;&gt;&lt;span itemprop=&quot;actor&quot;&gt;Bela Lugosi&lt;/span&gt;&lt;/a&gt;,
+      &lt;a href=&quot;/search/Tom+Keene/&quot;&gt;&lt;span itemprop=&quot;actor&quot;&gt;Tom Keene&lt;/span&gt;&lt;/a&gt;,
+      &lt;a href=&quot;/search/Mona+McKinnon/&quot;&gt;&lt;span itemprop=&quot;actor&quot;&gt;Mona McKinnon&lt;/span&gt;&lt;/a&gt;,
+      &lt;a href=&quot;/search/Duke+Moore/&quot;&gt;&lt;span itemprop=&quot;actor&quot;&gt;Duke Moore&lt;/span&gt;&lt;/a&gt;,
+      &lt;a href=&quot;/search/Vampira/&quot;&gt;&lt;span itemprop=&quot;actor&quot;&gt;Vampira&lt;/span&gt;&lt;/a&gt;
+  &lt;/h2&gt;
+
+  &lt;img itemprop=&quot;image&quot; src=&quot;http://ecx.images-amazon.com/images/I/51iqYZ3qQaL._SL160_.jpg&quot; /&gt;
+  &lt;p&gt;&lt;strong&gt;Our Price:&lt;/strong&gt; &lt;span itemprop=&quot;price&quot;&gt;&amp;euro;15.95&lt;/span&gt;&lt;/p&gt;
+  &lt;p&gt;Availability: &lt;span itemprop=&quot;availability&quot; href=&quot;http://schema.org/InStock&quot;&gt;Usually dispatched within 24 hours&lt;/span&gt;&lt;/p&gt;
+  
+  &lt;p&gt;Publisher: &lt;span itemprop=&quot;publisher&quot;&gt;MPIC Video&lt;/span&gt;&lt;/p&gt;
+  &lt;p&gt;Release date: &lt;span itemprop=&quot;datePublished&quot; content=&quot;2009-04-11&quot;&gt;11th April, 2009&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+
+<p>The pattern is the same as above. Each actor is wrapped in a span containing the &#8220;itemprop&#8221; attribute. The image tag itself contains the attribute so that the image source can be recognised by the search engines as the movie&#8217;s cover art.</p>
+
+<p>It&#8217;s worth noting the availability and release date data. The availability property has an associated href, to tell the search engine that it is in stock. The release data microdata includes the &#8220;content&#8221; attribute with the release data formatted in a way the search engines would better understand.</p>
+
+<h2 id='testing_the_result'>Testing the result</h2>
+
+<p>Google provides a handy tool within <a href='http://www.google.com/webmasters'>Google Webmasters</a> imaginatively titled &#8220;Rich Data Testing Tool&#8221;. It can be found under &#8220;Other Resources&#8221;. Putting the data above into the &#8221;<a href='http://www.shopireland.ie/dvd/B00005KH0Y/'>Plan 9 from Outer Space</a>&#8221; product listing and testing it resulted in the following:</p>
+<img src='/images/posts/movie-schema.png' alt='I schema for ice schema!' style='max-width: 100%;' />
+<h2 id='future_improvement'>Future improvement</h2>
+
+<p>As this is part of an ongoing improvement to the shop website, I will continue to add more microdata-labelled content as it is obtained. Scheme.org contains ways of labelling product descriptions, reviews, movie trailers and much more. It&#8217;s not just limited to products but can be used to describe people, authors and a range of creative works.</p></section>
+
+	<section class="tags">
+	  <ul>
+	    <li>Filed under:</li>
+	  
+	    <li><a href="#">Content</a></li>
+	  
+	  </ul>
+	</section>
+
+</article>
+
+
+    	</section>
+    </div>
+  </div>
+	<footer class="clearfix">
+	  <section class="footer-content">
+	    <p>I am <a href="http://github.com/ccarpenterg">ccarpenterg on Github</a>, and <a href="https://alpha.app.net/donovan">@donovan</a> on app.net.</p>
+		</section>
+	</footer>
+
+  <script id="bouncer-template" type="text/html">
+    <span class="mask"></span>
+    <span class="bounce1"></span>
+	  <span class="bounce2"></span>
+	  <span class="bounce3"></span>
+	  <span class="bouncer">
+	    <span class="ear1"></span>
+	    <span class="ear2"></span>
+	    <span class="eye1"></span>
+	    <span class="eye2"></span>
+	    <span class="mouth"></span>
+	  </span>
+  </script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+  <script>window.jQuery || document.write('<script src="/javascripts/jquery.min.js"><\/script>')</script>
+  <script src="/javascripts/main.js"></script>
+  <script src="/javascripts/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+
+
+
+  <script type="text/javascript">
+
+    var _gaq = _gaq || [];
+    
+    _gaq.push(['_setAccount', 'UA-3481417-23']);
+    _gaq.push(['_setDomainName', 'hop.ie']);
+    _gaq.push(['_setSiteSpeedSampleRate', 10]);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+
+  </script>
+</body>
+</html>

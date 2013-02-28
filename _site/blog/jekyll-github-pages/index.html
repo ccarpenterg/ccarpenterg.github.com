@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title> Using Jekyll &amp; GitHub Pages -  hop.ie</title>
+    <meta name="description" content="How I built this blog. (Hint: By using Jekyll and GitHub Pages)">
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="/stylesheets/screen.css">
+    
+
+    
+
+    <!--[if IE]>
+      <link rel="stylesheet" href="/stylesheets/ie.css">
+    <![endif]-->
+    <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular" rel="stylesheet" type="text/css">
+    <link href='http://fonts.googleapis.com/css?family=Source+Code+Pro' rel="stylesheet" type="text/css">
+    <link rel="canonical" href="/blog/jekyll-github-pages">
+    <meta name="google-site-verification" content="4b2gG2_kr5STLh0RhE34iPvU59o591CoG9N6iYOazvw" />
+    <script src="/javascripts/modernizr.js"></script>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script src="http://d3js.org/queue.v1.min.js"></script>
+</head>
+<body >
+  <div class="page-container">
+  	<header>
+  	</header>
+
+  	<div class="page clearfix">
+    	<section class="content">
+    		<article>
+
+	<header>
+	  <h1>Using Jekyll &amp; GitHub Pages</h1>
+	  <p class="date">July 22, 2012</p>
+	</header>
+
+	<section class="entry"><p>Hop.ie needed a new look, and what better opportunity to learn a new approach.</p>
+
+<p>I decided to try out <a href='http://jekyllrb.com/'>Jekyll</a>, a &#8220;blog aware, static site generator&#8221;, as well as <a href='http://pages.github.com'>GitHub Pages</a>. GitHub pages allows you to serve static websites for free. It&#8217;s extremely fast and easy to deploy if you&#8217;re used to Git.</p>
+
+<h2 id='getting_started_with_jekyll'>Getting started with Jekyll</h2>
+
+<p>Jekyll is <a href='https://github.com/mojombo/jekyll/wiki/install'>easy to install</a>. Once installed, there are loads of examples available online to learn from. One of the most feature-rich is <a href='https://github.com/plusjade/jekyll-bootstrap'>jekyll-bootstrap</a>. It includes handy rake tasks for setting up pages and posts, configuration for multiple comment systems and RSS distributors, and even a templating system.</p>
+
+<p>I prefer to start with something simpler (that I can understand) and add things on as needed. With that in mind, I found a great simple starter layout <a href='https://github.com/maciakl/Sample-Jekyll-Site'>from Lukasz Maciak</a>. I was able to refer to the features in jekyll-bootstap and grab various bits as I learned how it worked.</p>
+
+<h2 id='gotta_have_the_sass'>Gotta have the SASS</h2>
+
+<p>While building the HTML templates without using HAML was <em>ok</em>, I couldn&#8217;t stick to plain old CSS. I <a href='http://compass-style.org/install/'>installed Compass</a> and set up a sass directory within my stylesheets directory. Compass is a fantastic way to quickly produce efficient and powerful CSS effects, and includes a range of amazing plugins. One of which I got to try out was <a href='http://compass-style.org/reference/compass/typography/vertical_rhythm/'>Vertical Rhythm</a> (thanks to <a href='https://twitter.com/irishstu'>@irishstu</a> for the tip).</p>
+
+<p>A <a href='http://www.youtube.com/watch?v=ls3Clk-kz3s'>decent tutorial video</a> helped explain just what it was about, and it was a great help getting the text to behave.</p>
+
+<h2 id='migrating_from_wordpress'>Migrating from Wordpress</h2>
+
+<p>There are a million plugins and ways to convert Wordpress posts into other formats, but I found <a href='https://github.com/davidwinter/wordpress-to-jekyll'>this simple script</a> most handy in quickly converting a bunch of posts at once. It took very little time to then tidy up the meta data in each and remove some of the Wordpress-specific resources.</p>
+
+<h2 id='speaking_of_markdown'>Speaking of Markdown</h2>
+
+<p>Markdown is just lovely, compared to the bloated Wordpress WYSIWYG I escaped. I did need a quick introduction to some of the syntax, and <a href='http://old-wp.slekx.com/the-markdown-tutorial/'>this one from Slekz</a> was handy. More info is available from <a href='http://daringfireball.net/projects/markdown/basics/'>Daring Fireball</a>. (You can also see the source of <a href='https://raw.github.com/donovanh/donovanh.github.com/master/_posts/2012-07-22-jekyll-github-pages.markdown'>this post</a>.)</p>
+
+<h2 id='deploying_to_github_pages'>Deploying to GitHub Pages</h2>
+
+<p>Pages hosted on GitHub are generated through their own version of Jekyll. Because of this, no custom plugins will work. However if you wanted to pre-process your site locally and publish the static result, that would work too.</p>
+
+<p>Setting up and deploying this site was straightforward. I set up a new repo called <a href='https://github.com/donovanh/donovanh.github.com'>donovanh.github.com</a> (Note: You&#8217;ll want to add <strong>_site/*</strong> to your <em>.gitignore</em> file), then applied the following to my local Jekyll version of the site.</p>
+
+<pre><code>$ git init
+$ git add .
+$ git commit -a -m &quot;First commit&quot;
+$ git remote add origin git@github.com:donovanh/donovanh.github.com.git
+$ git push -u origin master</code></pre>
+
+<p>After waiting a few minutes for the site to be created, the site was available at <a href='http://donovanh.github.com'>donovanh.github.com</a>.</p>
+
+<h2 id='see_under_the_hood_on_github'>See under the hood on GitHub</h2>
+
+<p>I&#8217;m sure there are a few more blogposts in the process used to create this site, and as I learn more I&#8217;ll continue to update.</p>
+
+<p>In the meantime if you&#8217;d like to poke at the code behind this site, it&#8217;s <a href='https://github.com/donovanh/donovanh.github.com'>on GitHub right now</a>. Have fun, and if you feel like suggesting improvements I&#8217;d appreciate it.</p></section>
+
+	<section class="tags">
+	  <ul>
+	    <li>Filed under:</li>
+	  
+	    <li><a href="#">Jekyl</a></li>
+	  
+	    <li><a href="#">Github pages</a></li>
+	  
+	  </ul>
+	</section>
+
+</article>
+
+
+    	</section>
+    </div>
+  </div>
+	<footer class="clearfix">
+	  <section class="footer-content">
+	    <p>I am <a href="http://github.com/ccarpenterg">ccarpenterg on Github</a>, and <a href="https://alpha.app.net/donovan">@donovan</a> on app.net.</p>
+		</section>
+	</footer>
+
+  <script id="bouncer-template" type="text/html">
+    <span class="mask"></span>
+    <span class="bounce1"></span>
+	  <span class="bounce2"></span>
+	  <span class="bounce3"></span>
+	  <span class="bouncer">
+	    <span class="ear1"></span>
+	    <span class="ear2"></span>
+	    <span class="eye1"></span>
+	    <span class="eye2"></span>
+	    <span class="mouth"></span>
+	  </span>
+  </script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+  <script>window.jQuery || document.write('<script src="/javascripts/jquery.min.js"><\/script>')</script>
+  <script src="/javascripts/main.js"></script>
+  <script src="/javascripts/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+
+
+
+  <script type="text/javascript">
+
+    var _gaq = _gaq || [];
+    
+    _gaq.push(['_setAccount', 'UA-3481417-23']);
+    _gaq.push(['_setDomainName', 'hop.ie']);
+    _gaq.push(['_setSiteSpeedSampleRate', 10]);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+
+  </script>
+</body>
+</html>

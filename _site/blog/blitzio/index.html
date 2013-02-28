@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title> On being prepared -  hop.ie</title>
+    <meta name="description" content="Testing your web server performance with Blitz.io.">
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="/stylesheets/screen.css">
+    
+
+    
+
+    <!--[if IE]>
+      <link rel="stylesheet" href="/stylesheets/ie.css">
+    <![endif]-->
+    <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular" rel="stylesheet" type="text/css">
+    <link href='http://fonts.googleapis.com/css?family=Source+Code+Pro' rel="stylesheet" type="text/css">
+    <link rel="canonical" href="/blog/blitzio">
+    <meta name="google-site-verification" content="4b2gG2_kr5STLh0RhE34iPvU59o591CoG9N6iYOazvw" />
+    <script src="/javascripts/modernizr.js"></script>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script src="http://d3js.org/queue.v1.min.js"></script>
+</head>
+<body >
+  <div class="page-container">
+  	<header>
+  	</header>
+
+  	<div class="page clearfix">
+    	<section class="content">
+    		<article>
+
+	<header>
+	  <h1>On being prepared</h1>
+	  <p class="date">October 30, 2012</p>
+	</header>
+
+	<section class="entry"><p>In a <a href='/blog/shopireland-speed'>recent post</a> I used a tool called <a href='http://blitz.io'>Blitz.io</a> to test and compare the server speeds of my old and new hosting setups. I didn&#8217;t go into much detail at the time about the graphs or the data they provide, so I thought I&#8217;d expand a little on it here.</p>
+
+<h2 id='ermagerd'>Ermagerd</h2>
+
+<p>When I tried it for the first time, I was shocked at just how badly my site performed. The initial response times were over 500ms, and rather than continue at around that rate, they quickly slowed to under 2 seconds per response.</p>
+
+<p>Previous to this, I thought the site was pretty solid. I had put in place caching using PHP&#8217;s cache_lite and installed APC to help the code run faster. Yet the combination of distance and a server with low RAM was pretty damning. Here&#8217;s how I used this information to make the server better.</p>
+
+<h2 id='setting_up_with_blitzio'>Setting up with Blitz.io</h2>
+
+<p>The process of signing up and getting going is painless. As someone who works in UX, I appreciated the friendly, easy sign up. Something that could be easily portrayed as a dry, boring topic, is brought across as friendly and welcoming.</p>
+
+<h3 id='sprint__rush'>Sprint &amp; Rush</h3>
+
+<p>The way it works is straightforward. You enter the URL you&#8217;d like to test. The first step is that it pings the server (a sprint), and provides a summary of the headers returned. You can then run what is called a <em>rush</em>.</p>
+
+<p>A rush is when the server is hit by a number of users over the course of several seconds, minutes or longer. The resulting response times are graphed against the number of concurrent users. Running a sprint is straightforward if you&#8217;re familiar with command line interfaces. For example, if I was to hit foo.com with 250 users over 1 minute, from a server based in Japan, I could use the following command:</p>
+
+<pre><code>-p 1-250:60 --region japan http://www.foo.com</code></pre>
+
+<p>This would hit the foo.com site with a couple of thousand hits over the minute, and provide a graph of how the server fared:</p>
+<img src='/images/posts/nginx-caching.png' alt='Tidy.' width='100%' />
+<p>It also provides a breakdown of the number of hits, total amount of data transferred, and any timeouts or errors.</p>
+
+<h2 id='fun_sport'>Fun sport</h2>
+
+<p>Something Blitz.io tries to do is make the process of testing your server a &#8220;fun sport&#8221;. It is pretty good, if a little nail biting, watching the hundreds of connections hit the site and hoping, praying for no timeouts.</p>
+
+<p>For my use, I found it extremely handy. One of the biggest draws for me was the ability to test the server response from several locations, as my main target audience is based in Ireland. I was able to see how the server would fare if hit with lots of visitors from that area.</p>
+
+<p>If you have a server and haven&#8217;t run any stress tests to see just how it handles, I&#8217;d recommend signing up and giving it a go.</p></section>
+
+	<section class="tags">
+	  <ul>
+	    <li>Filed under:</li>
+	  
+	    <li><a href="#">Development</a></li>
+	  
+	  </ul>
+	</section>
+
+</article>
+
+
+    	</section>
+    </div>
+  </div>
+	<footer class="clearfix">
+	  <section class="footer-content">
+	    <p>I am <a href="http://github.com/ccarpenterg">ccarpenterg on Github</a>, and <a href="https://alpha.app.net/donovan">@donovan</a> on app.net.</p>
+		</section>
+	</footer>
+
+  <script id="bouncer-template" type="text/html">
+    <span class="mask"></span>
+    <span class="bounce1"></span>
+	  <span class="bounce2"></span>
+	  <span class="bounce3"></span>
+	  <span class="bouncer">
+	    <span class="ear1"></span>
+	    <span class="ear2"></span>
+	    <span class="eye1"></span>
+	    <span class="eye2"></span>
+	    <span class="mouth"></span>
+	  </span>
+  </script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+  <script>window.jQuery || document.write('<script src="/javascripts/jquery.min.js"><\/script>')</script>
+  <script src="/javascripts/main.js"></script>
+  <script src="/javascripts/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+
+
+
+  <script type="text/javascript">
+
+    var _gaq = _gaq || [];
+    
+    _gaq.push(['_setAccount', 'UA-3481417-23']);
+    _gaq.push(['_setDomainName', 'hop.ie']);
+    _gaq.push(['_setSiteSpeedSampleRate', 10]);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+
+  </script>
+</body>
+</html>

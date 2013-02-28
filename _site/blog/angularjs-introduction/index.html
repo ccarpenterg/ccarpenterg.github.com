@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title> Introduction to AngularJS -  hop.ie</title>
+    <meta name="description" content="Making your browser the way it should have been.">
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="/stylesheets/screen.css">
+    
+
+    
+
+    <!--[if IE]>
+      <link rel="stylesheet" href="/stylesheets/ie.css">
+    <![endif]-->
+    <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular" rel="stylesheet" type="text/css">
+    <link href='http://fonts.googleapis.com/css?family=Source+Code+Pro' rel="stylesheet" type="text/css">
+    <link rel="canonical" href="/blog/angularjs-introduction">
+    <meta name="google-site-verification" content="4b2gG2_kr5STLh0RhE34iPvU59o591CoG9N6iYOazvw" />
+    <script src="/javascripts/modernizr.js"></script>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script src="http://d3js.org/queue.v1.min.js"></script>
+</head>
+<body ng-app>
+  <div class="page-container">
+  	<header>
+  	</header>
+
+  	<div class="page clearfix">
+    	<section class="content">
+    		<article>
+
+	<header>
+	  <h1>Introduction to AngularJS</h1>
+	  <p class="date">August 14, 2012</p>
+	</header>
+
+	<section class="entry"><p>JavaScript frameworks have been taking great strides in the last couple of years. <a href='http://backbonejs.org/'>Backbone.js</a>, <a href='http://knockoutjs.com/'>Knockout</a>, <a href='http://emberjs.com/'>Ember</a> and many others offer new ways to keep your app data separate from the DOM, and making interesting web applications that work in the browser is getting easier and easier.</p>
+
+<p>Introducing <a href='http://angularjs.org/'>AngularJS</a>. Billing itself as a &#8220;superheroic javascript <acronym title='Model View Whatever'>MVW</acronym> framework&#8221;, AngularJS aims to make web browsers better at web apps. It offers two-way data binding, built-in templating, testing, and even a way to create your own HTML tag behaviour.</p>
+
+<p>While most of the new frameworks aim to offer an agnostic set of tools, AngularJS is opinionated. This brings a bit of a learning curve, but leads to very lean code that can be more easily understood by others familiar with the AngularJS approach.</p>
+
+<h2 id='look_ma_no_code'>Look ma, no code!</h2>
+
+<p>The way AngularJS handles two-way binding allows for very light code. Binding data between the model and DOM is as easy as declaring the model in a controller function, and referencing the model in the HTML.</p>
+
+<p>Input methods such as text or textarea fields are handled most easily, and more advanced binding is handled by the use of &#8220;directives&#8221;. Here&#8217;s a simple example:</p>
+
+<h2 id='hello_world'>Hello {{world}}!</h2>
+<input placeholder='Say hello!' type='text' ng-model='world' />
+<p>The heading above contains a &#8220;world&#8221; variable in curly braces:</p>
+<code class='ng-non-bindable'>
+	Hello {{world}}!
+</code>
+<p>The input text field references the &#8220;world&#8221;:</p>
+
+<pre><code>&lt;input type=&quot;text&quot; ng-model=&quot;world&quot; placeholder=&quot;Say hello!&quot; /&gt;</code></pre>
+
+<p>The curly braces describe variables (or functions), and is in this case &#8220;world&#8221;. By telling AngularJS that the input uses a model by the same name. The binding between the two is handled automatically behind the scenes.</p>
+
+<p>Aside from the above code, all that&#8217;s needed is to declare &#8220;ng-app&#8221; as an attribute on a containing element (&#8220;body&#8221; in this case), and to include the AngularJS library.</p>
+
+<p>The de facto standard ToDo list implementation is demonstrated <a href='http://angularjs.org/'>on their homepage</a>.</p>
+
+<h2 id='directives_creating_your_own_tags'>Directives: Creating your own tags</h2>
+
+<p>Instantly updated two-way binding between inputs and models is a great start, but AngularJS goes further with <a href='http://docs.angularjs.org/guide/directive'>directives</a>. Directives let you create custom behaviour for bespoke HTML tags and attributes. This means you can style and display the model data how you wish, and maintain it&#8217;s behind-the-scenes binding.</p>
+
+<p>I&#8217;ll admit, the structure of directives took me a while to get my head around. It&#8217;s possible to achieve a lot with AngularJS&#8217; many built in functions, but extending and customising your data with directives is very much worth a little extra effort.</p>
+
+<p>The end result is bespoke HTML tags and behaviours that can be thrown into layouts, moving much of the code and logic away from the templates. It&#8217;s even been used to recreate the <a href='http://blog.petermolgaard.com/2012/05/31/how-to-implement-a-blink-tag-in-angularjs/'>blink tag</a>.</p>
+
+<p>John Lindquist has <a href='http://johnlindquist.com/2012/04/16/angularjs_directive_tutorial.html'>a directive screencast</a> available, which is a great introduction to the idea.</p>
+
+<p>One more example. In the above code I wrapped the <span class='ng-non-bindable'>"Hello {{world}}"</span> text in code tags with the &#8220;ng-non-bindable&#8221; attribute. The attribute is itself a form of directive.</p>
+
+<h2 id='community'>Community</h2>
+
+<p>The community behind AngularJS is vibrant and there are plenty of examples and places to discuss issues. The <a href='https://groups.google.com/forum/?fromgroups#!forum/angular'>AngularJS Google Group</a> is active, along with the IRC channel (#angularjs on freenode), and the <a href='http://docs.angularjs.org/'>official documentation</a> includes many examples. While some of the examples might have issues from the transition between versions 0.9 and 1.0, they seem to be catching up.</p>
+
+<p>The AngularJS site includes a great <a href='http://builtwith.angularjs.org/'>showcase area</a> for completed projects, which even includes a wonderful <a href='http://ermahgerd.jmillerdesign.com/#!/translate'>ermagerd translator</a>.</p>
+
+<h2 id='templating_testing_and_more'>Templating, testing and more</h2>
+
+<p>As shown above, AngularJS allows for the curly brace style of template variables. It offers custom functionality, including loops and other logic that can be delivered along with the templates, which makes directives even more powerful. It also includes tools for the injection of tests to ensure your code does what it is supposed to. I&#8217;ll expand on these topics as my understanding of this interesting framework grows.</p>
+
+<p>In the meantime, do check out the <a href='http://docs.angularjs.org/tutorial'>AngularJS tutorial pages</a>, and their <a href='http://www.youtube.com/watch?v=WuiHuZq_cg4'>Youtube videos</a> for more info.</p></section>
+
+	<section class="tags">
+	  <ul>
+	    <li>Filed under:</li>
+	  
+	    <li><a href="#">Development</a></li>
+	  
+	  </ul>
+	</section>
+
+</article>
+
+
+    	</section>
+    </div>
+  </div>
+	<footer class="clearfix">
+	  <section class="footer-content">
+	    <p>I am <a href="http://github.com/ccarpenterg">ccarpenterg on Github</a>, and <a href="https://alpha.app.net/donovan">@donovan</a> on app.net.</p>
+		</section>
+	</footer>
+
+  <script id="bouncer-template" type="text/html">
+    <span class="mask"></span>
+    <span class="bounce1"></span>
+	  <span class="bounce2"></span>
+	  <span class="bounce3"></span>
+	  <span class="bouncer">
+	    <span class="ear1"></span>
+	    <span class="ear2"></span>
+	    <span class="eye1"></span>
+	    <span class="eye2"></span>
+	    <span class="mouth"></span>
+	  </span>
+  </script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+  <script>window.jQuery || document.write('<script src="/javascripts/jquery.min.js"><\/script>')</script>
+  <script src="/javascripts/main.js"></script>
+  <script src="/javascripts/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+
+  
+    <script src="/javascripts/angular.js"></script>
+  
+
+
+
+  <script type="text/javascript">
+
+    var _gaq = _gaq || [];
+    
+    _gaq.push(['_setAccount', 'UA-3481417-23']);
+    _gaq.push(['_setDomainName', 'hop.ie']);
+    _gaq.push(['_setSiteSpeedSampleRate', 10]);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+
+  </script>
+</body>
+</html>

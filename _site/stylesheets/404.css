@@ -1,0 +1,69 @@
+/*
+Syntax error: File to import not found or unreadable: compass/typography/vertical_rhythm.
+              Load paths:
+                /home/ccarpenterg/dev/ccarpenterg.github.com
+                /home/ccarpenterg/dev/ccarpenterg.github.com/stylesheets/sass
+        on line 4 of /home/ccarpenterg/dev/ccarpenterg.github.com/stylesheets/sass/_base.sass
+        from line 1 of /home/ccarpenterg/dev/ccarpenterg.github.com/stylesheets/sass/404.sass
+
+1: @import base
+2: /* Extra bouncer animation
+3: 
+4: .move-bouncer-404
+5:   @include animation-name(move-bouncer-404)
+6:   @include animation-duration(5s)
+7:   @include animation-fill-mode(forwards)
+8: 
+9: .bounce1, .bounce2, .bounce3
+
+Backtrace:
+/home/ccarpenterg/dev/ccarpenterg.github.com/stylesheets/sass/_base.sass:4
+/home/ccarpenterg/dev/ccarpenterg.github.com/stylesheets/sass/404.sass:1
+/usr/lib/ruby/gems/1.8/gems/sass-3.2.5/bin/../lib/sass/../sass/tree/import_node.rb:67:in `import'
+/usr/lib/ruby/gems/1.8/gems/sass-3.2.5/bin/../lib/sass/../sass/tree/import_node.rb:28:in `imported_file'
+/usr/lib/ruby/gems/1.8/gems/sass-3.2.5/bin/../lib/sass/../sass/tree/import_node.rb:37:in `css_import?'
+/usr/lib/ruby/gems/1.8/gems/sass-3.2.5/bin/../lib/sass/../sass/tree/visitors/perform.rb:215:in `visit_import'
+/usr/lib/ruby/gems/1.8/gems/sass-3.2.5/bin/../lib/sass/../sass/tree/visitors/base.rb:37:in `send'
+/usr/lib/ruby/gems/1.8/gems/sass-3.2.5/bin/../lib/sass/../sass/tree/visitors/base.rb:37:in `visit'
+/usr/lib/ruby/gems/1.8/gems/sass-3.2.5/bin/../lib/sass/../sass/tree/visitors/perform.rb:98:in `visit'
+/usr/lib/ruby/gems/1.8/gems/sass-3.2.5/bin/../lib/sass/../sass/tree/visitors/perform.rb:225:in `visit_import'
+/usr/lib/ruby/gems/1.8/gems/sass-3.2.5/bin/../lib/sass/../sass/tree/visitors/perform.rb:225:in `map'
+/usr/lib/ruby/gems/1.8/gems/sass-3.2.5/bin/../lib/sass/../sass/tree/visitors/perform.rb:225:in `visit_import'
+/usr/lib/ruby/gems/1.8/gems/sass-3.2.5/bin/../lib/sass/../sass/tree/visitors/base.rb:37:in `send'
+/usr/lib/ruby/gems/1.8/gems/sass-3.2.5/bin/../lib/sass/../sass/tree/visitors/base.rb:37:in `visit'
+/usr/lib/ruby/gems/1.8/gems/sass-3.2.5/bin/../lib/sass/../sass/tree/visitors/perform.rb:98:in `visit'
+/usr/lib/ruby/gems/1.8/gems/sass-3.2.5/bin/../lib/sass/../sass/tree/visitors/base.rb:53:in `visit_children'
+/usr/lib/ruby/gems/1.8/gems/sass-3.2.5/bin/../lib/sass/../sass/tree/visitors/base.rb:53:in `map'
+/usr/lib/ruby/gems/1.8/gems/sass-3.2.5/bin/../lib/sass/../sass/tree/visitors/base.rb:53:in `visit_children'
+/usr/lib/ruby/gems/1.8/gems/sass-3.2.5/bin/../lib/sass/../sass/tree/visitors/perform.rb:107:in `visit_children'
+/usr/lib/ruby/gems/1.8/gems/sass-3.2.5/bin/../lib/sass/../sass/tree/visitors/perform.rb:119:in `with_environment'
+/usr/lib/ruby/gems/1.8/gems/sass-3.2.5/bin/../lib/sass/../sass/tree/visitors/perform.rb:106:in `visit_children'
+/usr/lib/ruby/gems/1.8/gems/sass-3.2.5/bin/../lib/sass/../sass/tree/visitors/base.rb:37:in `visit'
+/usr/lib/ruby/gems/1.8/gems/sass-3.2.5/bin/../lib/sass/../sass/tree/visitors/perform.rb:126:in `visit_root'
+/usr/lib/ruby/gems/1.8/gems/sass-3.2.5/bin/../lib/sass/../sass/tree/visitors/base.rb:37:in `send'
+/usr/lib/ruby/gems/1.8/gems/sass-3.2.5/bin/../lib/sass/../sass/tree/visitors/base.rb:37:in `visit'
+/usr/lib/ruby/gems/1.8/gems/sass-3.2.5/bin/../lib/sass/../sass/tree/visitors/perform.rb:98:in `visit'
+/usr/lib/ruby/gems/1.8/gems/sass-3.2.5/bin/../lib/sass/../sass/tree/visitors/perform.rb:7:in `send'
+/usr/lib/ruby/gems/1.8/gems/sass-3.2.5/bin/../lib/sass/../sass/tree/visitors/perform.rb:7:in `visit'
+/usr/lib/ruby/gems/1.8/gems/sass-3.2.5/bin/../lib/sass/../sass/tree/root_node.rb:20:in `render'
+/usr/lib/ruby/gems/1.8/gems/sass-3.2.5/bin/../lib/sass/../sass/engine.rb:315:in `_render'
+/usr/lib/ruby/gems/1.8/gems/sass-3.2.5/bin/../lib/sass/../sass/engine.rb:262:in `render'
+/usr/lib/ruby/gems/1.8/gems/sass-3.2.5/bin/../lib/sass/../sass/plugin/compiler.rb:341:in `update_stylesheet'
+/usr/lib/ruby/gems/1.8/gems/sass-3.2.5/bin/../lib/sass/../sass/plugin/compiler.rb:203:in `update_stylesheets'
+/usr/lib/ruby/gems/1.8/gems/sass-3.2.5/bin/../lib/sass/../sass/plugin/compiler.rb:201:in `each'
+/usr/lib/ruby/gems/1.8/gems/sass-3.2.5/bin/../lib/sass/../sass/plugin/compiler.rb:201:in `update_stylesheets'
+/usr/lib/ruby/gems/1.8/gems/sass-3.2.5/bin/../lib/sass/../sass/plugin/compiler.rb:235:in `watch'
+/usr/lib/ruby/gems/1.8/gems/sass-3.2.5/bin/../lib/sass/../sass/plugin.rb:107:in `send'
+/usr/lib/ruby/gems/1.8/gems/sass-3.2.5/bin/../lib/sass/../sass/plugin.rb:107:in `method_missing'
+/usr/lib/ruby/gems/1.8/gems/sass-3.2.5/bin/../lib/sass/../sass/exec.rb:444:in `watch_or_update'
+/usr/lib/ruby/gems/1.8/gems/sass-3.2.5/bin/../lib/sass/../sass/exec.rb:307:in `process_result'
+/usr/lib/ruby/gems/1.8/gems/sass-3.2.5/bin/../lib/sass/../sass/exec.rb:41:in `parse'
+/usr/lib/ruby/gems/1.8/gems/sass-3.2.5/bin/../lib/sass/../sass/exec.rb:21:in `parse!'
+/usr/lib/ruby/gems/1.8/gems/sass-3.2.5/bin/sass:8
+/usr/bin/sass:19:in `load'
+/usr/bin/sass:19
+*/
+body:before {
+  white-space: pre;
+  font-family: monospace;
+  content: "Syntax error: File to import not found or unreadable: compass/typography/vertical_rhythm.\A               Load paths:\A                 /home/ccarpenterg/dev/ccarpenterg.github.com\A                 /home/ccarpenterg/dev/ccarpenterg.github.com/stylesheets/sass\A         on line 4 of /home/ccarpenterg/dev/ccarpenterg.github.com/stylesheets/sass/_base.sass\A         from line 1 of /home/ccarpenterg/dev/ccarpenterg.github.com/stylesheets/sass/404.sass\A \A 1: @import base\A 2: /* Extra bouncer animation\A 3: \A 4: .move-bouncer-404\A 5:   @include animation-name(move-bouncer-404)\A 6:   @include animation-duration(5s)\A 7:   @include animation-fill-mode(forwards)\A 8: \A 9: .bounce1, .bounce2, .bounce3"; }

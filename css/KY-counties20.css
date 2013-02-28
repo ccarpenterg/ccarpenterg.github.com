@@ -1,0 +1,32 @@
+
+.background {
+  fill: none;
+}
+
+#states {
+  fill: none;
+  stroke: #fff;
+}
+
+#counties, .legend {
+  stroke: green;
+}
+
+.legend {
+  stroke-width: 0.3px;
+}
+
+.description {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  line-height: 20px;
+  color: #333;
+}
+
+#map {
+  border: 1px solid #DEDEDE;
+}
+
+.tier-1 { fill:rgb(229, 245, 224); }
+.tier-2 { fill:rgb(161, 217, 155); }
+.tier-3 { fill:rgb(49, 163, 84); }

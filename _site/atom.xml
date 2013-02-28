@@ -1,0 +1,1097 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+ 
+ <title>Hop.ie - Donovan Hutchinson</title>
+ <link href="http://hop.ie/atom.xml" rel="self"/>
+ <link href="http://hop.ie/"/>
+ <updated>2013-02-28T19:35:25-03:00</updated>
+ <id>http://hop.ie/</id>
+ <author>
+   <name>Donovan Hutchinson</name>
+   <email>d@hop.ie</email>
+ </author>
+
+ 
+ <entry>
+   <title>new post</title>
+   <link href="http://hop.ie/blog/new-post"/>
+   <updated>2013-02-22T00:00:00-03:00</updated>
+   <id>http://hop.ie/blog/new-post</id>
+   <content type="html"></content>
+ </entry>
+ 
+ <entry>
+   <title>US Census Visualization with D3.js</title>
+   <link href="http://hop.ie/blog/us-census-visualization-with-d3js"/>
+   <updated>2013-02-20T00:00:00-03:00</updated>
+   <id>http://hop.ie/blog/us-census-visualization-with-d3js</id>
+   <content type="html">&lt;div id='KY-population'&gt;
+&lt;p&gt;This is a Population Map of Kentucky Counties created using &lt;a href='http://d3js.org'&gt;D3.js&lt;/a&gt;, a Census 2010 Shapefile and &lt;a href='http://www.gdal.org'&gt;GDAL&lt;/a&gt; (for geospatial data processing), inspired by the &lt;a href='http://www.census.gov/acs/www/Downloads/handbooks/ACSGeneralHandbook.pdf'&gt;American Community Survey Handbook&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;p&gt;It&amp;#8217;s really easy to create a map using D3.js. You just need a GeoJSON file and you&amp;#8217;re done. Having said that you have to have a minimum skillset to process the data and a bit of experience on map projections:&lt;/p&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='javascript'&gt;&lt;span class='kd'&gt;var&lt;/span&gt; &lt;span class='nx'&gt;projection&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='nx'&gt;d3&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;geo&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;mercator&lt;/span&gt;&lt;span class='p'&gt;()&lt;/span&gt;
+    &lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;scale&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='mi'&gt;29100&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt;
+    &lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;translate&lt;/span&gt;&lt;span class='p'&gt;([&lt;/span&gt;&lt;span class='mi'&gt;7310&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='mi'&gt;3500&lt;/span&gt;&lt;span class='p'&gt;]);&lt;/span&gt;
+
+&lt;span class='kd'&gt;var&lt;/span&gt; &lt;span class='nx'&gt;path&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='nx'&gt;d3&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;geo&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;path&lt;/span&gt;&lt;span class='p'&gt;()&lt;/span&gt;
+    &lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;projection&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nx'&gt;projection&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+
+&lt;span class='nx'&gt;svg&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;append&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s2'&gt;&amp;quot;g&amp;quot;&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt;
+    &lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;attr&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s2'&gt;&amp;quot;id&amp;quot;&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='s2'&gt;&amp;quot;counties&amp;quot;&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt;
+    &lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;selectAll&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s2'&gt;&amp;quot;path&amp;quot;&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt;
+    &lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;data&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nx'&gt;counties&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;features&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt;
+    &lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;enter&lt;/span&gt;&lt;span class='p'&gt;().&lt;/span&gt;&lt;span class='nx'&gt;append&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s2'&gt;&amp;quot;path&amp;quot;&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt;
+    &lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;attr&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s2'&gt;&amp;quot;d&amp;quot;&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='nx'&gt;path&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id='census_geospatial_data_and_geojson'&gt;Census Geospatial Data and GeoJSON&lt;/h3&gt;
+
+&lt;p&gt;D3.js uses the GeoJSON format to display maps. The GeoJSON format supports a variety of geographic data structures like Points, LineStrings and Polygons, and aditional properties like strings and numbers.&lt;/p&gt;
+
+&lt;p&gt;The Census Bureau has made available all the Geospatial data through the TIGER Shapefiles. And all you need to create a map is in these Shapefiles. Each zipped shapefile has the following files:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;.shp the feature geometry&lt;/li&gt;
+
+&lt;li&gt;.shx the index of the feature geometry&lt;/li&gt;
+
+&lt;li&gt;.dbf the tabular attribute information&lt;/li&gt;
+
+&lt;li&gt;.prj the coordinate system information&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;But in order to use the Census geographic data with D3.js you have to convert it to GeoJSON first.&lt;/p&gt;
+
+&lt;h3 id='tools_of_the_trade'&gt;Tools of the Trade&lt;/h3&gt;
+
+&lt;h4 id='data_processing'&gt;Data Processing&lt;/h4&gt;
+
+&lt;p&gt;When you&amp;#8217;re dealing with Geospatial data you need a tool to explore it and convert it to other formats. GDAL is shipped with two great tools to do this job: &lt;code&gt;ogrinfo&lt;/code&gt; and &lt;code&gt;ogr2ogr&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;ogrinfo is very useful to explore Shapefiles:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;ogrinfo -so gz_2010_us_050_00_20m.shp gz_2010_us_050_00_20m
+
+Layer name: gz_2010_us_050_00_20m
+Geometry: Polygon
+Feature Count: 3221
+Extent: (-179.147340, 17.884813) - (179.778470, 71.352561)
+Layer SRS WKT:
+GEOGCS[&amp;quot;GCS_North_American_1983&amp;quot;,
+DATUM[&amp;quot;North_American_Datum_1983&amp;quot;,
+    SPHEROID[&amp;quot;GRS_1980&amp;quot;,6378137,298.257222101]],
+PRIMEM[&amp;quot;Greenwich&amp;quot;,0],
+UNIT[&amp;quot;Degree&amp;quot;,0.017453292519943295]]
+GEO_ID: String (60.0)
+STATE: String (2.0)
+COUNTY: String (3.0)
+NAME: String (90.0)
+LSAD: String (7.0)
+CENSUSAREA: Real (31.15)&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;So in that Geospatial file we have the boundaries of 3221 counties. But in this case we just need a map of Kentucky:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;ogrinfo -so gz_2010_us_050_00_20m.shp gz_2010_us_050_00_20m -where &amp;#39;STATE=&amp;quot;21&amp;quot;&amp;#39;&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;GDAL also supports SQL language:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;ogrinfo -al gz_2010_us_050_00_20m.shp /
+-sql &amp;#39;SELECT * FROM gz_2010_us_050_00_20m where STATE=&amp;quot;21&amp;quot;&amp;#39;&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Since we now know what we want and how to get it we&amp;#8217;re ready to generate our GeoJSON file using ogr2ogr:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;ogr2ogr -f geoJSON KY-counties.json -where &amp;#39;STATE=&amp;quot;21&amp;quot;&amp;#39; gz_2010_us_050_00_20m.shp&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id='asynchronous_parallel_file_loading'&gt;Asynchronous Parallel File Loading&lt;/h4&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='javascript'&gt;&lt;span class='kd'&gt;var&lt;/span&gt; &lt;span class='nx'&gt;q&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='nx'&gt;queue&lt;/span&gt;&lt;span class='p'&gt;()&lt;/span&gt;
+    &lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;defer&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nx'&gt;d3&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;json&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='s2'&gt;&amp;quot;/geojson/KY-counties.json&amp;quot;&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt;
+    &lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;defer&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nx'&gt;d3&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;csv&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='s2'&gt;&amp;quot;/csv/KY-counties-pop.csv&amp;quot;&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt;
+    &lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;await&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nx'&gt;ready&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
+
+&lt;span class='kd'&gt;function&lt;/span&gt; &lt;span class='nx'&gt;ready&lt;/span&gt;&lt;span class='p'&gt;()&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;
+    &lt;span class='c1'&gt;//Draw the map&lt;/span&gt;
+&lt;span class='p'&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id='visualization'&gt;Visualization&lt;/h3&gt;
+
+&lt;p&gt;Well now we have to visualize the data on the map so I&amp;#8217;ve chosen the Choropleth map visualization to represent the population for each county. When it comes to styles D3.js is very straightforward. First define the classes styles:&lt;/p&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='css'&gt;&lt;span class='nc'&gt;.tier-1&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt; &lt;span class='n'&gt;fill&lt;/span&gt;&lt;span class='o'&gt;:&lt;/span&gt;&lt;span class='k'&gt;rgb&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='m'&gt;229&lt;/span&gt;&lt;span class='o'&gt;,&lt;/span&gt; &lt;span class='m'&gt;245&lt;/span&gt;&lt;span class='o'&gt;,&lt;/span&gt; &lt;span class='m'&gt;224&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt; &lt;span class='p'&gt;}&lt;/span&gt;
+&lt;span class='nc'&gt;.tier-2&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt; &lt;span class='n'&gt;fill&lt;/span&gt;&lt;span class='o'&gt;:&lt;/span&gt;&lt;span class='k'&gt;rgb&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='m'&gt;161&lt;/span&gt;&lt;span class='o'&gt;,&lt;/span&gt; &lt;span class='m'&gt;217&lt;/span&gt;&lt;span class='o'&gt;,&lt;/span&gt; &lt;span class='m'&gt;155&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt; &lt;span class='p'&gt;}&lt;/span&gt;
+&lt;span class='nc'&gt;.tier-3&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt; &lt;span class='n'&gt;fill&lt;/span&gt;&lt;span class='o'&gt;:&lt;/span&gt;&lt;span class='k'&gt;rgb&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='m'&gt;49&lt;/span&gt;&lt;span class='o'&gt;,&lt;/span&gt; &lt;span class='m'&gt;163&lt;/span&gt;&lt;span class='o'&gt;,&lt;/span&gt; &lt;span class='m'&gt;84&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt; &lt;span class='p'&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Then assign the right class to each node:&lt;/p&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='javascript'&gt;&lt;span class='nx'&gt;svg&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;append&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s2'&gt;&amp;quot;g&amp;quot;&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt;
+    &lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;attr&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s2'&gt;&amp;quot;id&amp;quot;&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='s2'&gt;&amp;quot;counties&amp;quot;&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt;
+    &lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;selectAll&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s2'&gt;&amp;quot;path&amp;quot;&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt;
+    &lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;data&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nx'&gt;counties&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;features&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt;
+    &lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;enter&lt;/span&gt;&lt;span class='p'&gt;().&lt;/span&gt;&lt;span class='nx'&gt;append&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s2'&gt;&amp;quot;path&amp;quot;&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt;
+    &lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;attr&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s2'&gt;&amp;quot;d&amp;quot;&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='nx'&gt;path&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt;
+    &lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;attr&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s2'&gt;&amp;quot;class&amp;quot;&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='kd'&gt;function&lt;/span&gt; &lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nx'&gt;d&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt; &lt;span class='p'&gt;{});&lt;/span&gt; &lt;span class='c1'&gt;// return the right class&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id='conclusion'&gt;Conclusion&lt;/h3&gt;
+
+&lt;p&gt;Data visualization is a lot easier than before and D3.js makes it very exciting.&lt;/p&gt;
+&lt;script src='/d3/KY-counties20.js'&gt;
+&lt;/script&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>On being prepared</title>
+   <link href="http://hop.ie/blog/blitzio"/>
+   <updated>2012-10-30T00:00:00-03:00</updated>
+   <id>http://hop.ie/blog/blitzio</id>
+   <content type="html">&lt;p&gt;In a &lt;a href='/blog/shopireland-speed'&gt;recent post&lt;/a&gt; I used a tool called &lt;a href='http://blitz.io'&gt;Blitz.io&lt;/a&gt; to test and compare the server speeds of my old and new hosting setups. I didn&amp;#8217;t go into much detail at the time about the graphs or the data they provide, so I thought I&amp;#8217;d expand a little on it here.&lt;/p&gt;
+
+&lt;h2 id='ermagerd'&gt;Ermagerd&lt;/h2&gt;
+
+&lt;p&gt;When I tried it for the first time, I was shocked at just how badly my site performed. The initial response times were over 500ms, and rather than continue at around that rate, they quickly slowed to under 2 seconds per response.&lt;/p&gt;
+
+&lt;p&gt;Previous to this, I thought the site was pretty solid. I had put in place caching using PHP&amp;#8217;s cache_lite and installed APC to help the code run faster. Yet the combination of distance and a server with low RAM was pretty damning. Here&amp;#8217;s how I used this information to make the server better.&lt;/p&gt;
+
+&lt;h2 id='setting_up_with_blitzio'&gt;Setting up with Blitz.io&lt;/h2&gt;
+
+&lt;p&gt;The process of signing up and getting going is painless. As someone who works in UX, I appreciated the friendly, easy sign up. Something that could be easily portrayed as a dry, boring topic, is brought across as friendly and welcoming.&lt;/p&gt;
+
+&lt;h3 id='sprint__rush'&gt;Sprint &amp;amp; Rush&lt;/h3&gt;
+
+&lt;p&gt;The way it works is straightforward. You enter the URL you&amp;#8217;d like to test. The first step is that it pings the server (a sprint), and provides a summary of the headers returned. You can then run what is called a &lt;em&gt;rush&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;A rush is when the server is hit by a number of users over the course of several seconds, minutes or longer. The resulting response times are graphed against the number of concurrent users. Running a sprint is straightforward if you&amp;#8217;re familiar with command line interfaces. For example, if I was to hit foo.com with 250 users over 1 minute, from a server based in Japan, I could use the following command:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;-p 1-250:60 --region japan http://www.foo.com&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This would hit the foo.com site with a couple of thousand hits over the minute, and provide a graph of how the server fared:&lt;/p&gt;
+&lt;img src='/images/posts/nginx-caching.png' alt='Tidy.' width='100%' /&gt;
+&lt;p&gt;It also provides a breakdown of the number of hits, total amount of data transferred, and any timeouts or errors.&lt;/p&gt;
+
+&lt;h2 id='fun_sport'&gt;Fun sport&lt;/h2&gt;
+
+&lt;p&gt;Something Blitz.io tries to do is make the process of testing your server a &amp;#8220;fun sport&amp;#8221;. It is pretty good, if a little nail biting, watching the hundreds of connections hit the site and hoping, praying for no timeouts.&lt;/p&gt;
+
+&lt;p&gt;For my use, I found it extremely handy. One of the biggest draws for me was the ability to test the server response from several locations, as my main target audience is based in Ireland. I was able to see how the server would fare if hit with lots of visitors from that area.&lt;/p&gt;
+
+&lt;p&gt;If you have a server and haven&amp;#8217;t run any stress tests to see just how it handles, I&amp;#8217;d recommend signing up and giving it a go.&lt;/p&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>Structured data</title>
+   <link href="http://hop.ie/blog/structured-data"/>
+   <updated>2012-10-29T00:00:00-03:00</updated>
+   <id>http://hop.ie/blog/structured-data</id>
+   <content type="html">&lt;p&gt;In June, 2011, Google, Bing and Yahoo! &lt;a href='http://googlewebmastercentral.blogspot.ie/2011/06/introducing-schemaorg-search-engines.html'&gt;unveiled&lt;/a&gt; the website &lt;a href='http://schema.org'&gt;schema.org&lt;/a&gt;. The intent was to introduce &amp;#8220;a common set of schemas for structured data markup on web pages&amp;#8221;. After leaving it for a year to see if it was going to stick around, it was time to add it to my &lt;a href='http://www.shopireland.ie'&gt;irish shopping website&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id='microdata'&gt;Microdata&lt;/h2&gt;
+
+&lt;p&gt;Schema.org brings a set of recommendations for adding extra descriptive data to your website. This takes the form of &lt;a href='http://en.wikipedia.org/wiki/Microdata_(HTML)'&gt;microdata&lt;/a&gt;. This microdata takes the form of attributes in your HTML, and is used to allow search engines to better understand what the data is.&lt;/p&gt;
+
+&lt;p&gt;An example of how this works is in describing the name of a movie. You might have the following heading in your HTML:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;h1&amp;gt;Plan 9 from Outer Space&amp;lt;/h1&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This might be useful to humans, who would see it in context of a web page describing a movie and know what that implied, but a search engine would not. Instead you would add microdata to tell the search engine that it is in fact a name:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;h1 itemprop=&amp;quot;name&amp;quot;&amp;gt;Plan 9 from Outer Space&amp;lt;/h1&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The search engine would be able to evaluate this as the name of the item described, and not just a page section or title.&lt;/p&gt;
+
+&lt;h2 id='uses'&gt;Uses&lt;/h2&gt;
+
+&lt;p&gt;While there might be many potential uses for this info, the most common is its use by Google and other search engines in creating richer search results. You can describe items such as a product&amp;#8217;s name, author, director, or price, and the search engine would then be able to display this in a more rich search result. Google also uses this data when generating it&amp;#8217;s &lt;a href='http://www.google.com/shopping'&gt;Google Shopping&lt;/a&gt; service.&lt;/p&gt;
+
+&lt;p&gt;Potential uses could go much further with any online catalogue being able to use spiders to go out and collect descriptive, useful data from across the web and collate it in one place.&lt;/p&gt;
+
+&lt;h2 id='realworld_example'&gt;Real-world example&lt;/h2&gt;
+
+&lt;p&gt;To make use of this, I decided to put some of the microdata into place on my shop. The schema.org website provides a great &lt;a href='http://schema.org/docs/gs.html'&gt;introduction here&lt;/a&gt;. The first step was to begin with a block of markup describing a product. Here&amp;#8217;s the data that I need to describe from the classic movie &lt;a href='/B00005KH0Y/'&gt;Plan 9 From Outer Space&lt;/a&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Plan 9 From Outer Space [DVD]
+starring:
+  Bela Lugosi,
+  Tom Keene,
+  Mona McKinnon,
+  Duke Moore,
+  Vampira
+Image: http://ecx.images-amazon.com/images/I/51iqYZ3qQaL._SL160_.jpg
+Our Price: €15.95
+Availability: Usually dispatched within 24 hours
+Publisher: MPIC Video
+Release date:11th April, 2009&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;To describe the above data, I would usually wrap it in plain HTML. The above if described in HTML might look something like this:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;h2&amp;gt;Plan 9 From Outer Space [DVD]
+  starring:
+  &amp;lt;a href=&amp;quot;/search/Bela+Lugosi/&amp;quot;&amp;gt;Bela Lugosi&amp;lt;/a&amp;gt;,
+  &amp;lt;a href=&amp;quot;/search/Tom+Keene/&amp;quot;&amp;gt;Tom Keene&amp;lt;/a&amp;gt;,
+  &amp;lt;a href=&amp;quot;/search/Mona+McKinnon/&amp;quot;&amp;gt;Mona McKinnon&amp;lt;/a&amp;gt;,
+  &amp;lt;a href=&amp;quot;/search/Duke+Moore/&amp;quot;&amp;gt;Duke Moore&amp;lt;/a&amp;gt;,
+  &amp;lt;a href=&amp;quot;/search/Vampira/&amp;quot;&amp;gt;Vampira&amp;lt;/a&amp;gt;
+&amp;lt;/h2&amp;gt;
+&amp;lt;img src=&amp;quot;http://ecx.images-amazon.com/images/I/51iqYZ3qQaL._SL160_.jpg&amp;quot; /&amp;gt;
+&amp;lt;p&amp;gt;Our Price: &amp;amp;euro;15.95&amp;lt;/p&amp;gt;
+&amp;lt;p&amp;gt;Availability: Usually dispatched within 24 hours&amp;lt;/p&amp;gt;
+&amp;lt;p&amp;gt;Publisher: MPIC Video&amp;lt;/p&amp;gt;
+&amp;lt;p&amp;gt;Release date: 11th April, 2009&amp;lt;/p&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Using titles and paragraphs would be fine for humans to understand, but search engines won&amp;#8217;t know that one paragraph describes the price, and another the availability.&lt;/p&gt;
+
+&lt;p&gt;We can use microdata to label the movie name and other meta data such as the item&amp;#8217;s URL, the price&amp;#8217;s currency, and even whether it&amp;#8217;s in stock.&lt;/p&gt;
+
+&lt;p&gt;The first step is to wrap the item in a container that defined its scope. Scheme has a &lt;a href='http://schema.org/docs/full.html'&gt;long list&lt;/a&gt; of schemes that can apply, but for this one I&amp;#8217;ll be using &amp;#8221;&lt;a href='http://schema.org/Movie'&gt;Movie&lt;/a&gt;&amp;#8221;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;div itemscope itemscheme=&amp;quot;http://schema.org/Movie&amp;quot;&amp;gt;
+  ... content here
+&amp;lt;/div&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This tells the search engine that everything contained within will match the scheme provided at &lt;code&gt;http://schema.org/Movie&lt;/code&gt;. Next, I add in some meta data and describe the name of the movie.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;div itemscope itemscheme=&amp;quot;http://schema.org/Movie&amp;quot;&amp;gt;
+  &amp;lt;link itemprop=&amp;quot;url&amp;quot; href=&amp;quot;full_url&amp;quot; /&amp;gt;
+  &amp;lt;h2&amp;gt;&amp;lt;span itemprop=&amp;quot;name&amp;quot;&amp;gt;Plan 9 From Outer Space [DVD]&amp;lt;/span&amp;gt;&amp;lt;/h2&amp;gt;
+&amp;lt;/div&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The &amp;#8220;itemprop&amp;#8221; attribute is used to label the contents as being certain properties of the item. In this case, the &amp;#8220;link&amp;#8221; tag is used to describe the URL. The movie name is described using &amp;#8220;itemprop=name&amp;#8221;. Next I add in the actors, image and other data.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;div itemscope itemscheme=&amp;quot;http://schema.org/Movie&amp;quot;&amp;gt;
+  &amp;lt;link itemprop=&amp;quot;url&amp;quot; href=&amp;quot;full_url&amp;quot; /&amp;gt;
+  &amp;lt;h2&amp;gt;&amp;lt;span itemprop=&amp;quot;name&amp;quot;&amp;gt;Plan 9 From Outer Space [DVD]&amp;lt;/span&amp;gt;
+      starring:
+      &amp;lt;a href=&amp;quot;/search/Bela+Lugosi/&amp;quot;&amp;gt;&amp;lt;span itemprop=&amp;quot;actor&amp;quot;&amp;gt;Bela Lugosi&amp;lt;/span&amp;gt;&amp;lt;/a&amp;gt;,
+      &amp;lt;a href=&amp;quot;/search/Tom+Keene/&amp;quot;&amp;gt;&amp;lt;span itemprop=&amp;quot;actor&amp;quot;&amp;gt;Tom Keene&amp;lt;/span&amp;gt;&amp;lt;/a&amp;gt;,
+      &amp;lt;a href=&amp;quot;/search/Mona+McKinnon/&amp;quot;&amp;gt;&amp;lt;span itemprop=&amp;quot;actor&amp;quot;&amp;gt;Mona McKinnon&amp;lt;/span&amp;gt;&amp;lt;/a&amp;gt;,
+      &amp;lt;a href=&amp;quot;/search/Duke+Moore/&amp;quot;&amp;gt;&amp;lt;span itemprop=&amp;quot;actor&amp;quot;&amp;gt;Duke Moore&amp;lt;/span&amp;gt;&amp;lt;/a&amp;gt;,
+      &amp;lt;a href=&amp;quot;/search/Vampira/&amp;quot;&amp;gt;&amp;lt;span itemprop=&amp;quot;actor&amp;quot;&amp;gt;Vampira&amp;lt;/span&amp;gt;&amp;lt;/a&amp;gt;
+  &amp;lt;/h2&amp;gt;
+
+  &amp;lt;img itemprop=&amp;quot;image&amp;quot; src=&amp;quot;http://ecx.images-amazon.com/images/I/51iqYZ3qQaL._SL160_.jpg&amp;quot; /&amp;gt;
+  &amp;lt;p&amp;gt;&amp;lt;strong&amp;gt;Our Price:&amp;lt;/strong&amp;gt; &amp;lt;span itemprop=&amp;quot;price&amp;quot;&amp;gt;&amp;amp;euro;15.95&amp;lt;/span&amp;gt;&amp;lt;/p&amp;gt;
+  &amp;lt;p&amp;gt;Availability: &amp;lt;span itemprop=&amp;quot;availability&amp;quot; href=&amp;quot;http://schema.org/InStock&amp;quot;&amp;gt;Usually dispatched within 24 hours&amp;lt;/span&amp;gt;&amp;lt;/p&amp;gt;
+  
+  &amp;lt;p&amp;gt;Publisher: &amp;lt;span itemprop=&amp;quot;publisher&amp;quot;&amp;gt;MPIC Video&amp;lt;/span&amp;gt;&amp;lt;/p&amp;gt;
+  &amp;lt;p&amp;gt;Release date: &amp;lt;span itemprop=&amp;quot;datePublished&amp;quot; content=&amp;quot;2009-04-11&amp;quot;&amp;gt;11th April, 2009&amp;lt;/span&amp;gt;
+&amp;lt;/div&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The pattern is the same as above. Each actor is wrapped in a span containing the &amp;#8220;itemprop&amp;#8221; attribute. The image tag itself contains the attribute so that the image source can be recognised by the search engines as the movie&amp;#8217;s cover art.&lt;/p&gt;
+
+&lt;p&gt;It&amp;#8217;s worth noting the availability and release date data. The availability property has an associated href, to tell the search engine that it is in stock. The release data microdata includes the &amp;#8220;content&amp;#8221; attribute with the release data formatted in a way the search engines would better understand.&lt;/p&gt;
+
+&lt;h2 id='testing_the_result'&gt;Testing the result&lt;/h2&gt;
+
+&lt;p&gt;Google provides a handy tool within &lt;a href='http://www.google.com/webmasters'&gt;Google Webmasters&lt;/a&gt; imaginatively titled &amp;#8220;Rich Data Testing Tool&amp;#8221;. It can be found under &amp;#8220;Other Resources&amp;#8221;. Putting the data above into the &amp;#8221;&lt;a href='http://www.shopireland.ie/dvd/B00005KH0Y/'&gt;Plan 9 from Outer Space&lt;/a&gt;&amp;#8221; product listing and testing it resulted in the following:&lt;/p&gt;
+&lt;img src='/images/posts/movie-schema.png' alt='I schema for ice schema!' style='max-width: 100%;' /&gt;
+&lt;h2 id='future_improvement'&gt;Future improvement&lt;/h2&gt;
+
+&lt;p&gt;As this is part of an ongoing improvement to the shop website, I will continue to add more microdata-labelled content as it is obtained. Scheme.org contains ways of labelling product descriptions, reviews, movie trailers and much more. It&amp;#8217;s not just limited to products but can be used to describe people, authors and a range of creative works.&lt;/p&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>ShopIreland.ie: Site speed</title>
+   <link href="http://hop.ie/blog/shopireland-speed"/>
+   <updated>2012-10-28T00:00:00-03:00</updated>
+   <id>http://hop.ie/blog/shopireland-speed</id>
+   <content type="html">&lt;p&gt;As part of my great &lt;a href='http://hop.ie/blog/fix-shopireland'&gt;website revamp&lt;/a&gt;, I&amp;#8217;m starting off by looking at the site speed and finding ways to improve it.&lt;/p&gt;
+
+&lt;h2 id='close_to_home'&gt;Close to home&lt;/h2&gt;
+
+&lt;p&gt;The first thing to decide was where the site is hosted. Previously it had been hosted with Slicehost on the east coast of USA. The target market for this site was in Ireland, so my plan was to find a host that was located closer.&lt;/p&gt;
+
+&lt;p&gt;I tried &lt;a href='http://hop.ie/blog/head-in-the-clouds'&gt;a few options&lt;/a&gt;, including setting up a server on Amazon&amp;#8217;s EC2. While Amazon had the potential to be the fastest with their Dublin location, I found their entry-level server too slow for my needs and the upgrades too expensive. After that I looked at a &lt;a href='http://linode.com'&gt;Linode&lt;/a&gt; virtual dedicated server option based in London.&lt;/p&gt;
+
+&lt;p&gt;While not quite as close as being hosted in Dublin, the delay sending data between the London and Dublin was tiny. Moving from a server in the USA to the UK shaved off a couple of hundred milliseconds from the response time. This was a noticeable difference and achieved by simply moving some files to another server.&lt;/p&gt;
+
+&lt;h2 id='cache_rules_everything_around_me'&gt;Cache Rules Everything Around Me&lt;/h2&gt;
+
+&lt;p&gt;Having moved to a closer server, I decided to revamp my old caching system. I spent the best part of 4 evenings over the course of a week hacking a way at it. While I learned many things about managing cache files before finding a much better solution that in the end took less than an hour to set up.&lt;/p&gt;
+
+&lt;h3 id='its_all_going_to_have_to_come_out'&gt;It&amp;#8217;s all going to have to come out&lt;/h3&gt;
+
+&lt;p&gt;As part of moving to a new server, I took the opportunity to install and set up &lt;a href='http://nginx.org'&gt;nginx&lt;/a&gt;. Nginx (Engine X) is a very light and fast web server optimised for serving up static assets (CSS, Images, JS) with very little overhead. It also includes a very nifty built-in caching engine.&lt;/p&gt;
+
+&lt;p&gt;My existing cache system involved PHP generating static files on each page request. The wasted time above was from setting up rules for nginx to check for the existence of static cache files, and serve them. The plan being that it would avoid having to go through Apache.&lt;/p&gt;
+
+&lt;p&gt;This idea of having the PHP generate the static pages and then serve them through nginx worked well, but created a bit of maintenance problem. I had to set up cron jobs to clear out the cache, and look at each file to see how old if was. Thankfully nginx offers a much easier alternative: proxy_cache.&lt;/p&gt;
+
+&lt;h2 id='proper_caching'&gt;Proper caching&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href='http://serverfault.com/a/68160'&gt;This example nginx config&lt;/a&gt; helped me realise how nginx could solve the caching issue. What it does is cache a version of the requested page and then serve that cached file in future. It makes use of page&amp;#8217;s own cache control header, so all I do was ensure the pages I wanted cached had the right headers, and it takes care of the rest.&lt;/p&gt;
+
+&lt;h2 id='some_numbers'&gt;Some numbers&lt;/h2&gt;
+
+&lt;p&gt;I hit the site with some tests from &lt;a href='http://blitz.io'&gt;blitz.io&lt;/a&gt; before and after the server move. In both cases I used an Ireland-based source and hit it with 250 connections over 60 seconds.&lt;/p&gt;
+
+&lt;p&gt;The difference is best seen in these two graphs. The first is on the old server, and shows the response times as the connections hit the site over the course of one minute, resulting in a couple of thousand hits:&lt;/p&gt;
+
+&lt;h3 id='old_site'&gt;Old site&lt;/h3&gt;
+&lt;img src='/images/posts/old-site.png' alt='Er me gerd' width='100%' /&gt;
+&lt;p&gt;The site gets slow and unresponsive as the hits add up. While it does at least manage to serve most of the requests, it quickly slows to the point of taking over 2 seconds each time. To make it worse, there&amp;#8217;s a baseline response time of around 500ms. That&amp;#8217;s half a second before the site has even begun to download assets.&lt;/p&gt;
+
+&lt;h3 id='new_site'&gt;New site&lt;/h3&gt;
+&lt;img src='/images/posts/nginx-caching.png' alt='Er me gerd!!!' width='100%' /&gt;
+&lt;p&gt;The average response time is 37ms, and this held up consistently across the test with no dropped requests.&lt;/p&gt;
+
+&lt;h2 id='result'&gt;Result&lt;/h2&gt;
+
+&lt;p&gt;In the end, the page response time was improved from over 500ms to 37ms. It is also much more stable and the server is better able to serve a range of requests as much of the load is taken away from Apache and handled by nginx.&lt;/p&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>Time to fix ShopIreland.ie</title>
+   <link href="http://hop.ie/blog/fix-shopireland"/>
+   <updated>2012-10-27T00:00:00-03:00</updated>
+   <id>http://hop.ie/blog/fix-shopireland</id>
+   <content type="html">&lt;p&gt;For the majority of the last decade I&amp;#8217;ve run a reasonably popular &lt;a href='http://www.shopireland.ie'&gt;irish shopping website&lt;/a&gt;. It started as a project where I would have a go learning some web service stuff, and try my hand at some SEO. Over the years I&amp;#8217;ve revamped and adjusted how it works, but on the surface, it&amp;#8217;s the same site that launched &lt;span&gt;in August 2004&lt;/span&gt;.&lt;/p&gt;
+
+&lt;p&gt;Over the years it went through some major ups and downs. At it&amp;#8217;s busiest it was serving 1.5 million unique visitors per month, and killing the dedicated server every day. At the moment it&amp;#8217;s down to a more modest 8 thousand or so visitors per month. Not a bad figure, but I&amp;#8217;m keen to improve the experience.&lt;/p&gt;
+
+&lt;h2 id='why_now'&gt;Why now?&lt;/h2&gt;
+
+&lt;p&gt;A couple of things have happened at once that have spurred me into action on this project. A new child arrives at the end of November, plus the site&amp;#8217;s host recently made the &lt;span&gt;move to the cloud&lt;/span&gt;. The site seems to have reached the bottom of it&amp;#8217;s gradual decline in the search engines and be on the way back up.&lt;/p&gt;
+
+&lt;h2 id='main_areas_to_improve'&gt;Main areas to improve&lt;/h2&gt;
+
+&lt;p&gt;The following list is far from exhaustive, but covers the main areas I&amp;#8217;d like to start on and might be able to achieve in the next few weeks before I&amp;#8217;m distracted by the arrival of child:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Site speed&lt;/li&gt;
+
+&lt;li&gt;Modern HTML/CSS&lt;/li&gt;
+
+&lt;li&gt;Information structure&lt;/li&gt;
+
+&lt;li&gt;Improved content&lt;/li&gt;
+
+&lt;li&gt;More shiny&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id='site_speed'&gt;Site speed&lt;/h2&gt;
+&lt;em&gt;&lt;strong&gt;Note:&lt;/strong&gt; Server speed improvements done! &lt;a href='http://hop.ie/blog/shopireland-speed'&gt;This post&lt;/a&gt; goes into greater detail.&lt;/em&gt;
+&lt;p&gt;The site has had some attention in this area but is still in need of improvement. As it makes heavy use of Amazon&amp;#8217;s product API, it is important that pages be cached and generated from the API only when needed. The original site had no caching and also did a lot of heavy database work on each view. Some patchy fixes to this have brought average page speeds down from 5 seconds to around 1.5 seconds, but I&amp;#8217;d like it to be &lt;a href='http://www.useit.com/papers/responsetime.html'&gt;under 1 second&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Website loading speed is important for creating trust but also brings benefits from the search engines. Google lists speed as one of its metrics by which it judges the site&amp;#8217;s quality.&lt;/p&gt;
+
+&lt;p&gt;Front end improvements can also massively impact the perceived speed of a site. While the number of requests to CSS and JS files is quite low, the files could benefit from compression and good caching headers.&lt;/p&gt;
+
+&lt;h2 id='modern_htmlcss'&gt;Modern HTML/CSS&lt;/h2&gt;
+
+&lt;p&gt;While the site&amp;#8217;s use of CSS was great back in 2004, its age is showing. The site relies on graphics for the rounded corners and gradients in the layout, and does not include any semantic HTML5 content. A revamp of this could have the benefit of improving page speed (removing graphics) while making it easier for browsers to understand the data.&lt;/p&gt;
+
+&lt;p&gt;While improving the HTML I will take steps to adjust and improve the way the site is presented, with the focus being on making it more readible and easy to find information.&lt;/p&gt;
+
+&lt;h2 id='information_structure'&gt;Information structure&lt;/h2&gt;
+&lt;em&gt;&lt;strong&gt;Note:&lt;/strong&gt; Information structure added! &lt;a href='/blog/structured-data/'&gt;This post&lt;/a&gt; goes into greater detail.&lt;/em&gt;
+&lt;p&gt;A side effect of the HTML being non-semantic is that the data has no meaning to search engines. &lt;a href='http://schema.org/'&gt;Schema.org&lt;/a&gt; provides an interesting way of describing the content within the HTML using microdata. I&amp;#8217;d like to implement this across the product pages.&lt;/p&gt;
+
+&lt;h2 id='improved_content'&gt;Improved content&lt;/h2&gt;
+
+&lt;p&gt;The site needs more content. While Amazon&amp;#8217;s API provides basic information on the products, they don&amp;#8217;t provide much raw data. Aside from the product title, price, creator (actor, director, writer) and manufacturer, there&amp;#8217;s not a lot else. I&amp;#8217;d like to look into means of hooking in data from other sources that might help people make better informed decisions.&lt;/p&gt;
+
+&lt;h2 id='moar_shiny'&gt;MOAR shiny&lt;/h2&gt;
+
+&lt;p&gt;While the above seem a little dry, they all add up to creating a solid structure on which a pleasant layer of shiny can be applied. Mobile responsiveness, retina graphics, carefully chosen fonts and colours are all part of this. The site&amp;#8217;s very plain and dated. While it doesn&amp;#8217;t need to be a graphical showcase, I would like it to look better.&lt;/p&gt;
+
+&lt;h2 id='updates'&gt;Updates&lt;/h2&gt;
+
+&lt;p&gt;The plan is to update this page as I make my way through the above list, noting what I did or decided not to do, along with any related blog posts. If you have any suggestions, please send me an email at &lt;a href='mailto:d@hop.ie'&gt;d@hop.ie&lt;/a&gt; or message me on the details below. I&amp;#8217;d love to hear your thoughts!&lt;/p&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>Pricing the cloud</title>
+   <link href="http://hop.ie/blog/head-in-the-clouds"/>
+   <updated>2012-10-23T00:00:00-03:00</updated>
+   <id>http://hop.ie/blog/head-in-the-clouds</id>
+   <content type="html">&lt;p&gt;A little while back, my hosting company &lt;a href='http://slicehost.com'&gt;Slicehost&lt;/a&gt; was purchased by &lt;a href='http://www.rackspace.com/cloud/'&gt;Rackspace&lt;/a&gt;. While this didn&amp;#8217;t change much at first, they are now in the process of migrating accounts to Rackspace&amp;#8217;s cloud platform.&lt;/p&gt;
+
+&lt;p&gt;As someone who&amp;#8217;s hosting bill has been a steady and predictable bill for the past 6 years, moving to the cloud is a bit of a change. I tidied up the server last weekend and pushed through the migration to the cloud system, and now I have no idea how much it&amp;#8217;s going to cost by the end of the month.&lt;/p&gt;
+
+&lt;h2 id='nebulous_billing'&gt;Nebulous billing&lt;/h2&gt;
+
+&lt;p&gt;Cloud hosting has an interesting approach to billing. Rather than pay a fixed amount for a server with a certain amount of RAM and a maximum bandwidth allowance, you are charged for what you use. As someone who could use between 15GB and 100GB in a month but never gave it much thought, I imagine this billing style could result in surprising bills.&lt;/p&gt;
+
+&lt;h2 id='price_comparison'&gt;Price comparison&lt;/h2&gt;
+
+&lt;p&gt;Having been on the service for just a few days, it&amp;#8217;s looking like the cloud system will be a little cheaper. I did some quick calculations and found that rather than pay $20 / $38 per month for the basic 256MB / 512MB slices on Slicehost, it&amp;#8217;ll be somewhere between $13.65 and $28.95, depending on bandwidth.&lt;/p&gt;
+
+&lt;h2 id='investigating_other_options'&gt;Investigating other options&lt;/h2&gt;
+
+&lt;p&gt;Since I&amp;#8217;ve gone to cloud with the existing server, I thought I&amp;#8217;d look into some of the options. Aside from the ongoing cost, finding a service with a locations in Ireland was something that mattered to me. With this in mind, I set up an account with Amazon&amp;#8217;s AWS services to use their &lt;a href='http://aws.amazon.com/ec2/'&gt;Elastic Compute Cloud&lt;/a&gt; (EC2).&lt;/p&gt;
+
+&lt;p&gt;Activating virtual servers (instances) within Amazon is straightforward, but I&amp;#8217;ll get into some of the specifics of setting up a multi-domain server in another post. The interface is pretty good, with plenty of resources around to help understand the terminology.&lt;/p&gt;
+
+&lt;h2 id='ec2_pricing'&gt;EC2 Pricing&lt;/h2&gt;
+
+&lt;p&gt;This is where I&amp;#8217;m less clear. The account I signed up for includes the use of a &amp;#8220;Micro&amp;#8221; instance, which is free for one year. After the year, it will be $15 per month. Bandwidth is a little cheaper than Rackspace. Rather than $0.18 per GB, Amazon charges $0.12 per GB. This would mean a total bill of between $16.80 and $27, assuming the &amp;#8220;Micro&amp;#8221; instance was enough to be going with.&lt;/p&gt;
+
+&lt;p&gt;Surprisingly, it turns out that if the Micro instance isn&amp;#8217;t enough and I need to upgrade to a &amp;#8220;Small&amp;#8221; instance, the instance cost increases to $60 per month (1.7GB server). An equivalent instance from Rackspace would be between $43.80 (1GB) and $87.60 (2GB). However, Rackspace offer smaller server size increases, with the next size up (512MB) costing $16 per month.&lt;/p&gt;
+
+&lt;h2 id='making_the_call'&gt;Making the call&lt;/h2&gt;
+
+&lt;p&gt;Thankfully Amazon allow the Micro instance to be run for a year before charging, so I plan to give it a reasonable go before making the call as to whether I&amp;#8217;m going to need more than what the Micro can offer.&lt;/p&gt;
+
+&lt;p&gt;I&amp;#8217;d love to hear your experiences if you&amp;#8217;ve used similar services. I can be reached on &lt;a href='http://twitter.com/donovanh'&gt;@donovanh&lt;/a&gt; on Twitter and &lt;a href='http://alpha.app.net/donovan'&gt;@donovan&lt;/a&gt; on app.net.&lt;/p&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>Ghost ridin' the website</title>
+   <link href="http://hop.ie/blog/casperjs"/>
+   <updated>2012-09-26T00:00:00-03:00</updated>
+   <id>http://hop.ie/blog/casperjs</id>
+   <content type="html">&lt;p&gt;Front-end development used to be straightforward. A little bit of HTML, some CSS for styling and setting the colours, and maybe sprinkle on some JavaScript to handle the rollovers and form validation. Well, it&amp;#8217;s not 1999 any more, it&amp;#8217;s time to stop partying and get serious. For a moment anyway.&lt;/p&gt;
+
+&lt;h2 id='web_apps_be_serious_business'&gt;Web apps be serious business&lt;/h2&gt;
+
+&lt;p&gt;I, like many web people, got into the industry through what started as a hobby and turned into a full time profession. For me this meant that I was never exposed to the formal software development processes that go on in larger teams, and even though I have spend much of the last decade putting together the front and back ends of large websites, taking the time to properly test the development has never been given priority.&lt;/p&gt;
+
+&lt;h2 id='booooooorrrrringgg'&gt;Booooooorrrrringgg&lt;/h2&gt;
+
+&lt;p&gt;The idea of writing a lot of code just for the purposes of checking what I could quite plainly tell was ok just by looking at it seemed absurd. Not that I was ever actually &lt;em&gt;asked&lt;/em&gt; to write tests for my work.&lt;/p&gt;
+
+&lt;p&gt;For the smaller projects I was involved with, this laissez-faire attitude got me by for the most part, but over the past year I&amp;#8217;ve been lucky enough to work with some excellent developers who have introduced me to the idea of test driven development, or TDD for short.&lt;/p&gt;
+
+&lt;h2 id='tddr'&gt;TD,DR&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href='http://en.wikipedia.org/wiki/Test_driven_development'&gt;Test-driven development&lt;/a&gt; is not a new idea, especially among the more serious back-end coding types, but in the world of front-end development I&amp;#8217;d never heard of it. It works like this.&lt;/p&gt;
+
+&lt;p&gt;First you conceive of what you&amp;#8217;d like your code to achieve. Work out what data it would start with, if any, and what the expected outcome would be. The next step is to write a test that checks if your function or code achieves this outcome. It will fail.&lt;/p&gt;
+
+&lt;p&gt;The next step is what might usually come first, namely you roll up the sleeves and get the test to pass by actually writing the function. However, don&amp;#8217;t go all perfectionist at this point. The aim is just to get the test to pass, and no more.&lt;/p&gt;
+
+&lt;p&gt;Once it passes, take a look at the horrible code, shake your head, refine the test for the cases you forgot to consider, and refactor it to make it a little better. Rinse, repeat.&lt;/p&gt;
+
+&lt;h2 id='great_but_why_use_a_machine_to_test'&gt;Great, but why use a machine to test?&lt;/h2&gt;
+
+&lt;p&gt;While it takes a bit of time to set up tests that go through all your functions and test them, if you&amp;#8217;re planning on revisiting some code and adding to it, tests are invaluable. It is all too easy to forget what your code does, especially after being away from it for some time. The issue gets even worse when it&amp;#8217;s someone else&amp;#8217;s code. This is where having a set of tests is so handy.&lt;/p&gt;
+
+&lt;p&gt;Simply running the tests before and during work on the code will inform you when something breaks, and will let you know when it&amp;#8217;s working again without having that niggling doubt at the back of your mind the whole time. It&amp;#8217;s a peace of mind, and as long as the tests are properly written, acts as a safety net for when you want to refactor or extend existing codebases.&lt;/p&gt;
+
+&lt;h2 id='whats_this_got_to_do_with_ghosts'&gt;What&amp;#8217;s this got to do with ghosts?&lt;/h2&gt;
+
+&lt;p&gt;I&amp;#8217;ll get to that in a moment. First though, unit tests. I spent a week or so writing and setting up a load of tests using the above approach, using the &lt;a href='https://github.com/pivotal/jasmine-gem'&gt;jasmine gem&lt;/a&gt; for Rails. A &lt;a href='http://railscasts.com/episodes/261-testing-javascript-with-jasmine'&gt;handy railscast&lt;/a&gt; introduced the set up well, and I was able to write a bunch of basic unit tests to test the functions in my current project.&lt;/p&gt;
+
+&lt;p&gt;Unit tests are small, isolated tests that target specific parts of the code, and check that what comes out is what you&amp;#8217;d expect to. There&amp;#8217;s a load of info online on the topic, and I&amp;#8217;d recommend taking the time to understand unit tests if you&amp;#8217;re working with a complex web app, but it&amp;#8217;s not the most exciting part.&lt;/p&gt;
+
+&lt;p&gt;Where it gets really interesting (for me) was implementation, or functional testing.&lt;/p&gt;
+
+&lt;h2 id='what_is_your_major_malfunction'&gt;What is your major malfunction?&lt;/h2&gt;
+
+&lt;p&gt;Implementation testing is when you take a step back and write tests that &lt;em&gt;use&lt;/em&gt; your website, and verify that it does what it&amp;#8217;s supposed to. This typically involves a real web browser, hitting a live (or locally hosted) version of your website, and clicking around like a mad thing.&lt;/p&gt;
+
+&lt;p&gt;There are many tools that achieve this. In the rails world, Capybara is a popular one. It runs what is known as &amp;#8220;drivers&amp;#8221; that launch your chosen web browser, and very quickly click through paths that you define. At each stage, you &lt;em&gt;assert&lt;/em&gt; that certain things are to be expected, and the result is a set of very much real-world tests.&lt;/p&gt;
+
+&lt;h2 id='the_ghost_in_the_machine'&gt;The ghost in the machine&lt;/h2&gt;
+
+&lt;p&gt;For those of us that like to use JavaScript, there&amp;#8217;s &lt;a href='http://phantomjs.org/'&gt;PhantomJS&lt;/a&gt;. PhantomJS is a framework set up to run a headless version of webkit, and can be configured to do pretty much anything a real web user can do. Only much much faster. Being headless means that it doesn&amp;#8217;t actually go to the effort of launching a visible browser, but runs it in a low-profile, invisible form. The result is that it&amp;#8217;s possible to have the browser launch, go to a web page, and run a list of checks all in a couple of seconds.&lt;/p&gt;
+
+&lt;p&gt;PhantomJS is a great tool, but admits itself that it&amp;#8217;s designed to be used as a platform for other tools to build upon. For that reason, there are some great helper frameworks that add an extra level of friendliness to PhantomJS, including my favourite, &lt;a href='http://casperjs.org/'&gt;CasperJS&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id='the_friendly_ghost'&gt;The Friendly Ghost&lt;/h2&gt;
+
+&lt;p&gt;While PhantomJS acts as a ghostly virtual website user, writing tests directly can be quite verbose and fiddly. CasperJS wraps it in a lovely set of methods that make it much easier to write sequential tests.&lt;/p&gt;
+
+&lt;p&gt;By sequential tests I mean that you can write a sequence of steps for the virtual browser to follow, in a very readible way, using very little code. Here&amp;#8217;s an example from the CasperJS site:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var casper = require(&amp;#39;casper&amp;#39;).create();
+
+casper.start(&amp;#39;http://google.fr/&amp;#39;, function() {
+    // search for &amp;#39;casperjs&amp;#39; from google form
+    this.fill(&amp;#39;form[action=&amp;quot;/search&amp;quot;]&amp;#39;, { q: &amp;#39;casperjs&amp;#39; }, true);
+});
+
+casper.then(function() {
+    // aggregate results for the &amp;#39;casperjs&amp;#39; search
+    links = this.evaluate(getLinks);
+    // now search for &amp;#39;phantomjs&amp;#39; by filling the form again
+    this.fill(&amp;#39;form[action=&amp;quot;/search&amp;quot;]&amp;#39;, { q: &amp;#39;phantomjs&amp;#39; }, true);
+});
+
+casper.then(function() {
+    // aggregate results for the &amp;#39;phantomjs&amp;#39; search
+    links = links.concat(this.evaluate(getLinks));
+});
+
+casper.run(function() {
+    // echo results in some pretty fashion
+    this.echo(links.length + &amp;#39; links found:&amp;#39;);
+    this.echo(&amp;#39; - &amp;#39; + links.join(&amp;#39;\n - &amp;#39;)).exit();
+});&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The above code demonstrates how to have the headless browser open Google, run a search, and then return a list of links from the results page. A couple of things to note include the &amp;#8220;fill&amp;#8221; method, which fills and optionally submits forms. Also note the structure. Everything is done in blocks using &lt;em&gt;casper.then(&amp;#8230;)&lt;/em&gt;. This ensures that the tests run from the top down, with the next only starting when the previous has finished.&lt;/p&gt;
+
+&lt;p&gt;There&amp;#8217;s a lot more it can do, including waiting for &lt;a href='http://casperjs.org/api.html#casper.waitForSelector'&gt;selectors to be available&lt;/a&gt;, &lt;a href='http://casperjs.org/api.html#casper.fetchText'&gt;fetching text content&lt;/a&gt;, checking &lt;a href='http://casperjs.org/api.html#casper.getTitle'&gt;page titles&lt;/a&gt;, and even &lt;a href='http://casperjs.org/api.html#casper.capture'&gt;capturing screenshots&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id='just_asserts'&gt;Just asserts&lt;/h2&gt;
+
+&lt;p&gt;The testing itself is handled by assertions. Functions that expect to evaluate true, and if not, show up in the test report as a nasty red &lt;em&gt;fail&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Something the above doesn&amp;#8217;t show is any actual tests. CasperJS includes lots of assert methods, such as assertEquals, assertEval, and assertVisible. So you might do something like this:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;casper.then(function() {
+	this.test.assertEquals(this.getTitle(), &amp;#39;The Page of Awesomeness&amp;#39;, &amp;#39;The page title was &amp;quot;The Page of Awesomeness&amp;quot;&amp;#39;);
+});&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Running the above test in the sequence would return a nice green &lt;em&gt;pass&lt;/em&gt; if your page was called &amp;#8220;The Page of Awesomeness&amp;#8221;, and a red &lt;em&gt;fail&lt;/em&gt; if your page sucks.&lt;/p&gt;
+
+&lt;h2 id='managing_lots_of_tests'&gt;Managing lots of tests&lt;/h2&gt;
+
+&lt;p&gt;When I discovered this way to test my web app using JavaScript, the first thing I did was to create a long sequence of casper.then, casper.then where the browser went around various views checking everything was alright. While this was an interesting way to see it in action, it quickly became unwieldy. The solution was to create smaller, targetted tests that could be run in isolation, and then run them all as a batch when needed.&lt;/p&gt;
+
+&lt;p&gt;There&amp;#8217;s a &lt;a href='http://casperjs.org/testing.html#casper-test-command'&gt;great overview of multiple tests&lt;/a&gt; on the CasperJS website and I would recommend checking it for the best way to handly running multiple tests. Having done that, I now have a suite of tests I can check individually and run in a big set whenever I need want to make sure everything&amp;#8217;s still in good order.&lt;/p&gt;
+
+&lt;h2 id='setting_up_casperjs_and_phantomjs_osx'&gt;Setting up CasperJS and PhantomJS (OSX)&lt;/h2&gt;
+
+&lt;p&gt;Danny Croft has some great &lt;a href='http://dannycroft.co.uk/front-end-unit-testing-with-javascript/'&gt;instructions on setting up PhantomJS and CasperJS&lt;/a&gt; so rather than copy and paste them here, I would thoroughly recommend checking out his guide.&lt;/p&gt;
+
+&lt;h2 id='beyond_testing'&gt;Beyond testing&lt;/h2&gt;
+
+&lt;p&gt;Having a scripted headless browser at your disposal is a powerful and fun tool. It&amp;#8217;s extremely useful for implementation tests, but already there are some great alternate uses coming through like &lt;a href='http://wesleyhales.com/blog/2012/08/16/Site-Load-Time-Testing-with-PhantomJS/'&gt;website performance testing&lt;/a&gt;, and even &lt;a href='http://www.subelsky.com/2012/08/webscraping-with-casperjs-and-phantomjs.html'&gt;scraping data for an API&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;What&amp;#8217;s most surprising to me is that I&amp;#8217;ve actually found the process of testing &lt;em&gt;fun&lt;/em&gt;. It&amp;#8217;s also reassuring to know that I can make changes and be confident that it does what it&amp;#8217;s meant to.&lt;/p&gt;
+
+&lt;h2 id='a_note_on_versions'&gt;A note on versions&lt;/h2&gt;
+
+&lt;p&gt;Currently, CasperJS works best with version 1.6.1 of PhantomJS. Version 1.7 of PhantomJS is available but there might be a delay before CasperJS catches up with the extra fuctionality. Casper is currently rocking a well-tested 1.0.0-RC1.&lt;/p&gt;
+
+&lt;h2 id='feedback'&gt;Feedback&lt;/h2&gt;
+
+&lt;p&gt;If you enjoyed this article, found it offensive or just too long, you&amp;#8217;ll want to &lt;a href='http://twitter.com/donovanh'&gt;send me a message on twitter&lt;/a&gt; then.&lt;/p&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>Introduction to AngularJS</title>
+   <link href="http://hop.ie/blog/angularjs-introduction"/>
+   <updated>2012-08-14T00:00:00-04:00</updated>
+   <id>http://hop.ie/blog/angularjs-introduction</id>
+   <content type="html">&lt;p&gt;JavaScript frameworks have been taking great strides in the last couple of years. &lt;a href='http://backbonejs.org/'&gt;Backbone.js&lt;/a&gt;, &lt;a href='http://knockoutjs.com/'&gt;Knockout&lt;/a&gt;, &lt;a href='http://emberjs.com/'&gt;Ember&lt;/a&gt; and many others offer new ways to keep your app data separate from the DOM, and making interesting web applications that work in the browser is getting easier and easier.&lt;/p&gt;
+
+&lt;p&gt;Introducing &lt;a href='http://angularjs.org/'&gt;AngularJS&lt;/a&gt;. Billing itself as a &amp;#8220;superheroic javascript &lt;acronym title='Model View Whatever'&gt;MVW&lt;/acronym&gt; framework&amp;#8221;, AngularJS aims to make web browsers better at web apps. It offers two-way data binding, built-in templating, testing, and even a way to create your own HTML tag behaviour.&lt;/p&gt;
+
+&lt;p&gt;While most of the new frameworks aim to offer an agnostic set of tools, AngularJS is opinionated. This brings a bit of a learning curve, but leads to very lean code that can be more easily understood by others familiar with the AngularJS approach.&lt;/p&gt;
+
+&lt;h2 id='look_ma_no_code'&gt;Look ma, no code!&lt;/h2&gt;
+
+&lt;p&gt;The way AngularJS handles two-way binding allows for very light code. Binding data between the model and DOM is as easy as declaring the model in a controller function, and referencing the model in the HTML.&lt;/p&gt;
+
+&lt;p&gt;Input methods such as text or textarea fields are handled most easily, and more advanced binding is handled by the use of &amp;#8220;directives&amp;#8221;. Here&amp;#8217;s a simple example:&lt;/p&gt;
+
+&lt;h2 id='hello_world'&gt;Hello {{world}}!&lt;/h2&gt;
+&lt;input placeholder='Say hello!' type='text' ng-model='world' /&gt;
+&lt;p&gt;The heading above contains a &amp;#8220;world&amp;#8221; variable in curly braces:&lt;/p&gt;
+&lt;code class='ng-non-bindable'&gt;
+	Hello {{world}}!
+&lt;/code&gt;
+&lt;p&gt;The input text field references the &amp;#8220;world&amp;#8221;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;input type=&amp;quot;text&amp;quot; ng-model=&amp;quot;world&amp;quot; placeholder=&amp;quot;Say hello!&amp;quot; /&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The curly braces describe variables (or functions), and is in this case &amp;#8220;world&amp;#8221;. By telling AngularJS that the input uses a model by the same name. The binding between the two is handled automatically behind the scenes.&lt;/p&gt;
+
+&lt;p&gt;Aside from the above code, all that&amp;#8217;s needed is to declare &amp;#8220;ng-app&amp;#8221; as an attribute on a containing element (&amp;#8220;body&amp;#8221; in this case), and to include the AngularJS library.&lt;/p&gt;
+
+&lt;p&gt;The de facto standard ToDo list implementation is demonstrated &lt;a href='http://angularjs.org/'&gt;on their homepage&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id='directives_creating_your_own_tags'&gt;Directives: Creating your own tags&lt;/h2&gt;
+
+&lt;p&gt;Instantly updated two-way binding between inputs and models is a great start, but AngularJS goes further with &lt;a href='http://docs.angularjs.org/guide/directive'&gt;directives&lt;/a&gt;. Directives let you create custom behaviour for bespoke HTML tags and attributes. This means you can style and display the model data how you wish, and maintain it&amp;#8217;s behind-the-scenes binding.&lt;/p&gt;
+
+&lt;p&gt;I&amp;#8217;ll admit, the structure of directives took me a while to get my head around. It&amp;#8217;s possible to achieve a lot with AngularJS&amp;#8217; many built in functions, but extending and customising your data with directives is very much worth a little extra effort.&lt;/p&gt;
+
+&lt;p&gt;The end result is bespoke HTML tags and behaviours that can be thrown into layouts, moving much of the code and logic away from the templates. It&amp;#8217;s even been used to recreate the &lt;a href='http://blog.petermolgaard.com/2012/05/31/how-to-implement-a-blink-tag-in-angularjs/'&gt;blink tag&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;John Lindquist has &lt;a href='http://johnlindquist.com/2012/04/16/angularjs_directive_tutorial.html'&gt;a directive screencast&lt;/a&gt; available, which is a great introduction to the idea.&lt;/p&gt;
+
+&lt;p&gt;One more example. In the above code I wrapped the &lt;span class='ng-non-bindable'&gt;&quot;Hello {{world}}&quot;&lt;/span&gt; text in code tags with the &amp;#8220;ng-non-bindable&amp;#8221; attribute. The attribute is itself a form of directive.&lt;/p&gt;
+
+&lt;h2 id='community'&gt;Community&lt;/h2&gt;
+
+&lt;p&gt;The community behind AngularJS is vibrant and there are plenty of examples and places to discuss issues. The &lt;a href='https://groups.google.com/forum/?fromgroups#!forum/angular'&gt;AngularJS Google Group&lt;/a&gt; is active, along with the IRC channel (#angularjs on freenode), and the &lt;a href='http://docs.angularjs.org/'&gt;official documentation&lt;/a&gt; includes many examples. While some of the examples might have issues from the transition between versions 0.9 and 1.0, they seem to be catching up.&lt;/p&gt;
+
+&lt;p&gt;The AngularJS site includes a great &lt;a href='http://builtwith.angularjs.org/'&gt;showcase area&lt;/a&gt; for completed projects, which even includes a wonderful &lt;a href='http://ermahgerd.jmillerdesign.com/#!/translate'&gt;ermagerd translator&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id='templating_testing_and_more'&gt;Templating, testing and more&lt;/h2&gt;
+
+&lt;p&gt;As shown above, AngularJS allows for the curly brace style of template variables. It offers custom functionality, including loops and other logic that can be delivered along with the templates, which makes directives even more powerful. It also includes tools for the injection of tests to ensure your code does what it is supposed to. I&amp;#8217;ll expand on these topics as my understanding of this interesting framework grows.&lt;/p&gt;
+
+&lt;p&gt;In the meantime, do check out the &lt;a href='http://docs.angularjs.org/tutorial'&gt;AngularJS tutorial pages&lt;/a&gt;, and their &lt;a href='http://www.youtube.com/watch?v=WuiHuZq_cg4'&gt;Youtube videos&lt;/a&gt; for more info.&lt;/p&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>Testing subdomains in Sinatra</title>
+   <link href="http://hop.ie/blog/sinatra-subdomains"/>
+   <updated>2012-08-12T00:00:00-04:00</updated>
+   <id>http://hop.ie/blog/sinatra-subdomains</id>
+   <content type="html">&lt;p&gt;A side project I&amp;#8217;m currently working on requires the setting up and testing of many subdomains. Since the project itself is quite light, I&amp;#8217;ve chosen to build it in the superb &lt;a href='http://www.sinatrarb.com/'&gt;Sinatra&lt;/a&gt;. When testing Sinatra apps locally, the usual address to test in browser is &lt;code&gt;0.0.0.0:4567&lt;/code&gt;. While this is good enough for single domain projects, it&amp;#8217;s a problem when you need to set up and test a project across multiple subdomains.&lt;/p&gt;
+
+&lt;h2 id='using_hosts_file'&gt;Using hosts file&lt;/h2&gt;
+
+&lt;p&gt;If you have a small number of URLs to test, adding them to your hosts file might be an option. The following format can be used in your hosts file:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;127.0.0.1	one.yourapp.dev
+127.0.0.1	two.yourapp.dev
+127.0.0.1	three.yourapp.dev&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You can then access these (assuming your app is running on port 4567) by visiting &lt;code&gt;one.yourapp.dev:4567&lt;/code&gt; and see it running locally.&lt;/p&gt;
+
+&lt;p&gt;Alternatively, if you want to be able to test against a large range of subdomains, a fun alternative is to use &lt;a href='http://pow.cx'&gt;POW!!&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id='pow'&gt;POW!!&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href='http://pow.cx'&gt;Pow!!&lt;/a&gt; is a handy wrapper for running and testing multiple apps on local &amp;#8220;.dev&amp;#8221; URLs. It&amp;#8217;s trivial to set up and fires up a server for you to save a few seconds each time. Installing is as easy as:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;curl get.pow.cx | sh&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Then setting up a symlink to your project:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;cd ~/.pow
+ln -s /path/to/myapp myapp&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;em&gt;*Note: The docs seem to leave out the second &amp;#8220;myapp&amp;#8221; above when creating the symlink. This worked for me.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;Restarting the server involves creating a text file in a &lt;code&gt;tmp&lt;/code&gt; directory in your project, called &lt;em&gt;restart.txt&lt;/em&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;touch tmp/restart.txt&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;If you want the application to restart every time you refresh, create a text file called &lt;em&gt;always_restart.txt&lt;/em&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;touch tmp/always_restart.txt&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Pow!! has &lt;a href='http://pow.cx/manual.html'&gt;more documentation here&lt;/a&gt; should you need it, but you should now be able to visit &lt;code&gt;anything.myapp.dev&lt;/code&gt; and access your app.&lt;/p&gt;
+
+&lt;p&gt;Now that you have the app running at subdomains, it&amp;#8217;s time get Sinatra to sing along.&lt;/p&gt;
+
+&lt;h2 id='sinatra_subdomain'&gt;Sinatra Subdomain&lt;/h2&gt;
+
+&lt;p&gt;Enter &lt;a href='http://rubydoc.info/gems/sinatra-subdomain/0.1.2/frames'&gt;Sinatra Subdomain&lt;/a&gt;, a handy gem from Brazil&amp;#8217;s &lt;a href='https://twitter.com/fnando'&gt;@fnando&lt;/a&gt;. The gem is &lt;a href='http://rubydoc.info/gems/sinatra-subdomain/0.1.2/frames'&gt;well documented&lt;/a&gt; and easy to set up.&lt;/p&gt;
+
+&lt;p&gt;Installing the Sinatra Subdomain gem:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo gem install sinatra-subdomain&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You&amp;#8217;ll then want to require the gem in your app:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;require &amp;quot;sinatra/subdomain&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The gem can then be used to target specific subdomains, or take a wildcard approach. If you&amp;#8217;re specifying your subdomains, the following will respond to the subdomain &lt;code&gt;foo&lt;/code&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;subdomain :foo do
+  get &amp;#39;/&amp;#39; do
+    &amp;quot;What does #{subdomain} rhyme with? Oh, you!&amp;quot;
+  end
+end&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;In my case, I found it more useful to allow any subdomains and set up routes for them as a group:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;subdomain do
+  # Route for the root
+  get &amp;#39;/&amp;#39; do
+    &amp;quot;You&amp;#39;re on the #{subdomain} home page! Good job!&amp;quot;
+  end
+  # Route for a different page
+  get &amp;#39;/bananas&amp;#39;
+    &amp;quot;You&amp;#39;re #{subdomain} for bananas! Good job!&amp;quot;
+  end
+end&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;While this works well for &lt;code&gt;crazy.myapp.dev&lt;/code&gt; and &lt;code&gt;mad.myapp.dev/bananas&lt;/code&gt;, the above won&amp;#8217;t work for &lt;code&gt;myapp.dev&lt;/code&gt; without the subdomain. To catch this, add the following after the subdomain section:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;get &amp;#39;/&amp;#39; do
+  &amp;quot;Now that&amp;#39;s more like it.&amp;quot;
+end&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You&amp;#8217;ll now be set up to start putting together the logic for handling one, two or many subdomains. Good luck!&lt;/p&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>Just In Time</title>
+   <link href="http://hop.ie/blog/just-in-time"/>
+   <updated>2012-07-31T00:00:00-04:00</updated>
+   <id>http://hop.ie/blog/just-in-time</id>
+   <content type="html">&lt;p&gt;There&amp;#8217;s a strategy often used in manufacturing industries called &lt;a href='http://en.wikipedia.org/wiki/Just_in_time_(business)'&gt;Just In Time&lt;/a&gt; production.&lt;/p&gt;
+
+&lt;p&gt;As I&amp;#8217;m both lazy and busier than I&amp;#8217;ve ever been, I though I&amp;#8217;d take a leaf out of the &lt;em&gt;just in time&lt;/em&gt; book and apply it to web development. The result is this site.&lt;/p&gt;
+
+&lt;h2 id='contentedness'&gt;Contentedness&lt;/h2&gt;
+
+&lt;p&gt;This site was intended to be a blog first, and a sandbox for my own design whims second. Before redesigning, the old site had it the other way round. The design was heavy, both in terms of file size and visual noise, and not enough attention given to content.&lt;/p&gt;
+
+&lt;p&gt;As much as I liked how the site looked, it&amp;#8217;s lack of focus did nothing to encourage me to want to blog. Why bother, when the posts would be buried somewhere off the home page and covered in social &amp;#8220;share&amp;#8221; button bullshit?&lt;/p&gt;
+
+&lt;h3 id='content_content_content'&gt;Content content content&lt;/h3&gt;
+
+&lt;p&gt;With that in mind I began with a totally empty page and one rule, only add something if it really needs it. Or if it&amp;#8217;s really nice and doesn&amp;#8217;t get in the way of the content. Two rules. Also, no images. Three. Three rules.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;1. Does it help the content?
+2. Is it fun, and doesn&amp;#39;t violate rule 1?&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id='wait_for_it'&gt;Wait for it&lt;/h2&gt;
+
+&lt;p&gt;I&amp;#8217;ve been gradually adding bits here and there as they seem relevant, and holding back on anything that might get in the way of the content; &lt;a href='http://www.youtube.com/watch?v=H8eP99neOVs'&gt;saying no&lt;/a&gt;, as Steve Jobs said.&lt;/p&gt;
+
+&lt;p&gt;I wanted some sort of identifying logo, but at the same time maintain focus on the site content. The best way, it seemed, was to have a simple but recognisable image. Something fun and not too serious, but not distracting either.&lt;/p&gt;
+
+&lt;p&gt;I considered adding a top navigation, but if I wanted to focus on the content first, a menu would be a distraction. No.&lt;/p&gt;
+
+&lt;p&gt;I considered adding a sidebar with photo and contact details, but, again, distraction. If you want to get in touch with me, it&amp;#8217;s not hard to find a way. So, again, No.&lt;/p&gt;
+
+&lt;p&gt;I considered a background image. I would certainly do something if it didn&amp;#8217;t violate rule 1, but for now, no.&lt;/p&gt;
+
+&lt;p&gt;As a result, this blog&amp;#8217;s a lot plainer looking than the previous version. Yet, I like it a lot more.&lt;/p&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>It's a Quacker!</title>
+   <link href="http://hop.ie/blog/quacker"/>
+   <updated>2012-07-30T00:00:00-04:00</updated>
+   <id>http://hop.ie/blog/quacker</id>
+   <content type="html">&lt;p&gt;So I thought I&amp;#8217;d share some info about a fun side project I&amp;#8217;ve just put online. &lt;a href='http://quack.herokuapp.com'&gt;Quacker&lt;/a&gt; is a tool that translates a tweet before posting it to your Twitter account. It&amp;#8217;s also been a chance to learn more about some modern (and free) web technologies.&lt;/p&gt;
+
+&lt;p&gt;The project was a good chance to combine HAML &amp;amp; SASS on the front-end, deploy the app using Heroku, and share the &lt;a href='https://github.com/donovanh/Quacker'&gt;Quacker site code&lt;/a&gt; using GitHub. The site also uses Microsoft&amp;#8217;s translation API.&lt;/p&gt;
+
+&lt;h2 id='quack_quack_quack'&gt;Quack quack, quack?&lt;/h2&gt;
+
+&lt;p&gt;Some birds tweet, but ducks speak a different language: they quack.&lt;/p&gt;
+
+&lt;p&gt;The Quacker site is admittedly a bit of a &lt;a href='http://en.wikipedia.org/wiki/MacGuffin'&gt;MacGuffin&lt;/a&gt;, but I&amp;#8217;m quite happy with it as a fun idea. Sometimes it&amp;#8217;s worth wrapping an idea around a technology, if only as a means of providing better motivation to learn it.&lt;/p&gt;
+
+&lt;h2 id='sinatra_takes_the_stage'&gt;Sinatra takes the stage&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href='http://www.sinatrarb.com/'&gt;Sinatra&lt;/a&gt; is a beautifully light Ruby based framework for quickly building light web applications. I&amp;#8217;d been introduced to it by the excellent &lt;a href='http://twitter.com/stevebiscuit'&gt;@stevebiscuit&lt;/a&gt; last year. This was the first time I&amp;#8217;d really taken a good look at it, and I&amp;#8217;m glad I did.&lt;/p&gt;
+
+&lt;h3 id='as_simple_as_1234'&gt;As simple as 1,2,3,4&lt;/h3&gt;
+
+&lt;p&gt;Moving from front-end code into the back-end coding can be a bit of a mental jump, but with Sinatra, it&amp;#8217;s pretty easy. It works by describing URLs and then actions that take place at that URL. For example, a home page can be served up by defining a GET request, but login action can be associated with POST requests to the same URL. A great introduction can be &lt;a href='http://www.sinatrarb.com/intro'&gt;found here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;One of the benefits of this light, fast framework is the availability of Ruby gems. Sinatra is itself a gem, and since it is based on Ruby I was able to incorporate some amazingly helpful tools, such as &lt;a href='http://haml.info/'&gt;HAML&lt;/a&gt;, &lt;a href='https://github.com/intridea/omniauth'&gt;Omniauth&lt;/a&gt; (for Twitter), and even a &lt;a href='https://github.com/ikayzo/microsoft_translator'&gt;Microsoft Translator gem&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;A complete list of dependencies can be found in my &lt;a href='https://github.com/donovanh/Quacker/blob/master/Gemfile'&gt;Gemfile&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id='haml__sass'&gt;HAML &amp;amp; SASS&lt;/h2&gt;
+
+&lt;p&gt;I&amp;#8217;ll admit that when I first started using &lt;a href='http://haml.info/'&gt;HAML&lt;/a&gt; I was confused by it&amp;#8217;s use of significant whitespace but it&amp;#8217;s grown on me. I am now much faster (and happier) putting together HTML layouts using HAML. If you&amp;#8217;re in the business of churning out reams of HTML layout code, take the time to check this one out.&lt;/p&gt;
+
+&lt;h3 id='compass_id_be_lost_without_it'&gt;Compass: I&amp;#8217;d be lost without it&lt;/h3&gt;
+
+&lt;p&gt;&lt;a href='http://compass-style.org/'&gt;Compass&lt;/a&gt; is a framework that gives you tools to generate CSS that does a lot, while having to write very little code. Variables, mixins, and the ability to reuse classes make it a must-have when starting any web projects. The end result is well-optimised CSS that can be set to be generated as a compressed single file, perfect for deployment.&lt;/p&gt;
+
+&lt;p&gt;The documentation can be a little confusing at times but there are plenty of great examples. I would recommend getting a small local project instantiated using Compass and play around with how it works. One tip that has saved me a load of time: Set up a &lt;code&gt;_base&lt;/code&gt; file to store all your variables and requires.&lt;/p&gt;
+
+&lt;h2 id='hosting_with_heroku'&gt;Hosting with Heroku&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href='http://heroku.com'&gt;Heroku&lt;/a&gt; is a cloud application platform that is handy for easily deploying Ruby applications. For small experiment apps, their free hosting is invaluable, and it can be managed using git. Deploying to heroku is as easy as pushing a git repo to master. Check out instructions on &lt;a href='https://devcenter.heroku.com/articles/git'&gt;getting started with Heroku and git&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id='social_code_with_github'&gt;Social code with GitHub&lt;/h2&gt;
+
+&lt;p&gt;Building this website would have been much more work if it wasn&amp;#8217;t for the amazing resources shared on &lt;a href='http://github.com'&gt;GitHub&lt;/a&gt;. It&amp;#8217;s a great place to discover tools, see how others have approached issues, and both learn about and share code. With that in mind I&amp;#8217;m very happy to be &lt;a href='https://github.com/donovanh/Quacker'&gt;sharing my Quacker source&lt;/a&gt; and I hope it is useful.&lt;/p&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>Designing for speed</title>
+   <link href="http://hop.ie/blog/designing-for-speed"/>
+   <updated>2012-07-27T00:00:00-04:00</updated>
+   <id>http://hop.ie/blog/designing-for-speed</id>
+   <content type="html">&lt;p&gt;The speed of your website is a huge factor in how people perceive the quality of your content. By following some simple tips, you&amp;#8217;ll be able to ensure your site responds quickly enough to encourage visitors to stick around.&lt;/p&gt;
+
+&lt;h2 id='a_timely_issue'&gt;A timely issue&lt;/h2&gt;
+
+&lt;p&gt;Jakob Nielsen &lt;a href='http://www.useit.com/alertbox/9703a.html'&gt;has been advocating since 1993&lt;/a&gt; that loading times are the most valued aspect of a website. Even &lt;a href='http://www.useit.com/alertbox/response-times.html'&gt;in 2010&lt;/a&gt; his research was showing the same desperate need for speed. Though our connectivity has improved dramatically since then, changes in the way we use the web has brought speed back into focus.&lt;/p&gt;
+
+&lt;h2 id='phones'&gt;&lt;del&gt;Smart&lt;/del&gt;phones&lt;/h2&gt;
+
+&lt;p&gt;Smartphone use might be reaching 4G speeds in some places, but for most people using mobile devices over the phone networks, the speed is much worse than landline connections. It&amp;#8217;s also a fact that a massive number of people, particularly in &lt;a href='http://afrinnovator.com/blog/2012/02/02/why-you-must-never-forget-about-the-humble-feature-phone-in-africa/'&gt;Africa&lt;/a&gt; and &lt;a href='http://www.engadget.com/2012/07/19/smartphone-internet-china/'&gt;much of Asia&lt;/a&gt;, are using their phones as a primary Internet connection.&lt;/p&gt;
+
+&lt;p&gt;You simply cannot assume that your users will be on fast connections. They could well be on a train or outside the cities, relying on an edge connection or satellite broadband.&lt;/p&gt;
+
+&lt;h2 id='500_improvement'&gt;500% improvement&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href='http://shopireland.ie'&gt;ShopIreland.ie&lt;/a&gt;, a shopping comparison site launched in 2005, is a site I managed and put in place some of the following ideas to improve speed.&lt;/p&gt;
+
+&lt;p&gt;As a result of some pretty straightforward client-side tweaks, I brought down the typical page load time from over 5 seconds to as low as 1 second.&lt;/p&gt;
+
+&lt;h2 id='manage_your_graphics'&gt;Manage your graphics&lt;/h2&gt;
+
+&lt;p&gt;Possibly the biggest improvement to Shop Ireland came about from putting the main colour scheme images into &lt;a href='http://www.shopireland.ie/images/all.png'&gt;one sprite file&lt;/a&gt;. While the graphics in use could be redone using CSS now, at the time the CSS3 effects were not well supported. Instead, I combined the images into one PNG file, and used the background-position property in CSS to theme different sections of the site. While this didn&amp;#8217;t cut a huge amount off the initial page load, the cached image loads instantly on subsequent page loads.&lt;/p&gt;
+
+&lt;p&gt;Using up-to-date CSS is now a viable option, and if you can make use of gradients, border-radius, background sizes and the many CSS3 options, you should be able to get rid of most of your presentational images.&lt;/p&gt;
+
+&lt;p&gt;This blog also uses very few images. To try to ensure the important part of the blog, namely the content, got to the screen fastest, I even built the bouncy logo character using HTML &amp;amp; CSS. If you&amp;#8217;re browsing this on a recent browser (Chrome or Safari, for instance), the logo is described in just a bunch of CSS instead of an image. I&amp;#8217;ve also tried where possible to make use of background colours and gradients to minimise the number of images.&lt;/p&gt;
+
+&lt;h2 id='use_the_clouds'&gt;Use the clouds&lt;/h2&gt;
+
+&lt;p&gt;Distributing your assets is a great way speed up sites. Popular javascript tools such as jQuery can be cached by the browser, so it&amp;#8217;s possible your visitors might not even need to download it again. You can even go further and host javascript template fragments or images on different content delivery networks. This allows your browser to make more simultaneous connections and make better use of your bandwidth.&lt;/p&gt;
+
+&lt;h2 id='combine__minify'&gt;Combine &amp;amp; minify&lt;/h2&gt;
+
+&lt;p&gt;Often the biggest overhead in page loading speed is when the browser is looking up the connection. If you open many connections, these lookups will stack up and cause a significant delay. Get around this by combining CSS files into one, and ensuring they are minified. Ensuring that your server serves these assets using GZIP will have help massively too. It&amp;#8217;s not uncommon for CSS files over 30 or 40KB to end up less than 5KB after compression.&lt;/p&gt;
+
+&lt;p&gt;The same goes for Javascript files. The fewer connections the browser needs to make, the faster things will arrive.&lt;/p&gt;
+
+&lt;h2 id='load_order'&gt;Load order&lt;/h2&gt;
+
+&lt;p&gt;Put your CSS in the head, and your Javascript before the closing &lt;em&gt;body&lt;/em&gt; tag.&lt;/p&gt;
+
+&lt;h2 id='go_static__caching'&gt;Go static &amp;amp; caching&lt;/h2&gt;
+
+&lt;p&gt;While it doesn&amp;#8217;t count as a &amp;#8220;client-side&amp;#8221; tweak, this is something I&amp;#8217;ve put into practice here on this blog and I felt it worth mentioning. Making static versions of your pages or site content will cut out a decent chunk of server-side processing time. In the case of this blog, I was able to eliminate my old Wordpress installation and publish directly using HTML pages. A busy server trying to serve up a Wordpress blog can easily add a second or two to the page load time, if not more in some cases.&lt;/p&gt;
+
+&lt;h2 id='helpful_tools'&gt;Helpful tools&lt;/h2&gt;
+
+&lt;p&gt;Last year Google introduced Page Speed as a metric for all Analytics accounts. They also offer some great &lt;a href='https://developers.google.com/speed/pagespeed/'&gt;browser plugins and services&lt;/a&gt; to help speed up sites.&lt;/p&gt;
+
+&lt;p&gt;Yahoo&amp;#8217;s &lt;a href='http://developer.yahoo.com/yslow/'&gt;YSlow&lt;/a&gt; is another great tool to help identify the weak points in your page loading times.&lt;/p&gt;
+
+&lt;p&gt;If you need assistance setting up image sprites, &lt;a href='http://spritepad.wearekiss.com/'&gt;Sprite Pad&lt;/a&gt; is an interesting tool. Alternately, &lt;a href='http://www.spritecow.com/'&gt;SpriteCow&lt;/a&gt; seems pretty cool.&lt;/p&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>Simplicity</title>
+   <link href="http://hop.ie/blog/simplicity"/>
+   <updated>2012-07-26T00:00:00-04:00</updated>
+   <id>http://hop.ie/blog/simplicity</id>
+   <content type="html">&lt;p&gt;Decide what your point is.&lt;/p&gt;
+
+&lt;p&gt;Get to it.&lt;/p&gt;
+
+&lt;p&gt;Stop.&lt;/p&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>Using Jekyll &amp; GitHub Pages</title>
+   <link href="http://hop.ie/blog/jekyll-github-pages"/>
+   <updated>2012-07-22T00:00:00-04:00</updated>
+   <id>http://hop.ie/blog/jekyll-github-pages</id>
+   <content type="html">&lt;p&gt;Hop.ie needed a new look, and what better opportunity to learn a new approach.&lt;/p&gt;
+
+&lt;p&gt;I decided to try out &lt;a href='http://jekyllrb.com/'&gt;Jekyll&lt;/a&gt;, a &amp;#8220;blog aware, static site generator&amp;#8221;, as well as &lt;a href='http://pages.github.com'&gt;GitHub Pages&lt;/a&gt;. GitHub pages allows you to serve static websites for free. It&amp;#8217;s extremely fast and easy to deploy if you&amp;#8217;re used to Git.&lt;/p&gt;
+
+&lt;h2 id='getting_started_with_jekyll'&gt;Getting started with Jekyll&lt;/h2&gt;
+
+&lt;p&gt;Jekyll is &lt;a href='https://github.com/mojombo/jekyll/wiki/install'&gt;easy to install&lt;/a&gt;. Once installed, there are loads of examples available online to learn from. One of the most feature-rich is &lt;a href='https://github.com/plusjade/jekyll-bootstrap'&gt;jekyll-bootstrap&lt;/a&gt;. It includes handy rake tasks for setting up pages and posts, configuration for multiple comment systems and RSS distributors, and even a templating system.&lt;/p&gt;
+
+&lt;p&gt;I prefer to start with something simpler (that I can understand) and add things on as needed. With that in mind, I found a great simple starter layout &lt;a href='https://github.com/maciakl/Sample-Jekyll-Site'&gt;from Lukasz Maciak&lt;/a&gt;. I was able to refer to the features in jekyll-bootstap and grab various bits as I learned how it worked.&lt;/p&gt;
+
+&lt;h2 id='gotta_have_the_sass'&gt;Gotta have the SASS&lt;/h2&gt;
+
+&lt;p&gt;While building the HTML templates without using HAML was &lt;em&gt;ok&lt;/em&gt;, I couldn&amp;#8217;t stick to plain old CSS. I &lt;a href='http://compass-style.org/install/'&gt;installed Compass&lt;/a&gt; and set up a sass directory within my stylesheets directory. Compass is a fantastic way to quickly produce efficient and powerful CSS effects, and includes a range of amazing plugins. One of which I got to try out was &lt;a href='http://compass-style.org/reference/compass/typography/vertical_rhythm/'&gt;Vertical Rhythm&lt;/a&gt; (thanks to &lt;a href='https://twitter.com/irishstu'&gt;@irishstu&lt;/a&gt; for the tip).&lt;/p&gt;
+
+&lt;p&gt;A &lt;a href='http://www.youtube.com/watch?v=ls3Clk-kz3s'&gt;decent tutorial video&lt;/a&gt; helped explain just what it was about, and it was a great help getting the text to behave.&lt;/p&gt;
+
+&lt;h2 id='migrating_from_wordpress'&gt;Migrating from Wordpress&lt;/h2&gt;
+
+&lt;p&gt;There are a million plugins and ways to convert Wordpress posts into other formats, but I found &lt;a href='https://github.com/davidwinter/wordpress-to-jekyll'&gt;this simple script&lt;/a&gt; most handy in quickly converting a bunch of posts at once. It took very little time to then tidy up the meta data in each and remove some of the Wordpress-specific resources.&lt;/p&gt;
+
+&lt;h2 id='speaking_of_markdown'&gt;Speaking of Markdown&lt;/h2&gt;
+
+&lt;p&gt;Markdown is just lovely, compared to the bloated Wordpress WYSIWYG I escaped. I did need a quick introduction to some of the syntax, and &lt;a href='http://old-wp.slekx.com/the-markdown-tutorial/'&gt;this one from Slekz&lt;/a&gt; was handy. More info is available from &lt;a href='http://daringfireball.net/projects/markdown/basics/'&gt;Daring Fireball&lt;/a&gt;. (You can also see the source of &lt;a href='https://raw.github.com/donovanh/donovanh.github.com/master/_posts/2012-07-22-jekyll-github-pages.markdown'&gt;this post&lt;/a&gt;.)&lt;/p&gt;
+
+&lt;h2 id='deploying_to_github_pages'&gt;Deploying to GitHub Pages&lt;/h2&gt;
+
+&lt;p&gt;Pages hosted on GitHub are generated through their own version of Jekyll. Because of this, no custom plugins will work. However if you wanted to pre-process your site locally and publish the static result, that would work too.&lt;/p&gt;
+
+&lt;p&gt;Setting up and deploying this site was straightforward. I set up a new repo called &lt;a href='https://github.com/donovanh/donovanh.github.com'&gt;donovanh.github.com&lt;/a&gt; (Note: You&amp;#8217;ll want to add &lt;strong&gt;_site/*&lt;/strong&gt; to your &lt;em&gt;.gitignore&lt;/em&gt; file), then applied the following to my local Jekyll version of the site.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ git init
+$ git add .
+$ git commit -a -m &amp;quot;First commit&amp;quot;
+$ git remote add origin git@github.com:donovanh/donovanh.github.com.git
+$ git push -u origin master&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;After waiting a few minutes for the site to be created, the site was available at &lt;a href='http://donovanh.github.com'&gt;donovanh.github.com&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id='see_under_the_hood_on_github'&gt;See under the hood on GitHub&lt;/h2&gt;
+
+&lt;p&gt;I&amp;#8217;m sure there are a few more blogposts in the process used to create this site, and as I learn more I&amp;#8217;ll continue to update.&lt;/p&gt;
+
+&lt;p&gt;In the meantime if you&amp;#8217;d like to poke at the code behind this site, it&amp;#8217;s &lt;a href='https://github.com/donovanh/donovanh.github.com'&gt;on GitHub right now&lt;/a&gt;. Have fun, and if you feel like suggesting improvements I&amp;#8217;d appreciate it.&lt;/p&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>New site: Converser.io</title>
+   <link href="http://hop.ie/blog/new-site-converser-io"/>
+   <updated>2012-04-05T00:00:00-03:00</updated>
+   <id>http://hop.ie/blog/new-site-converser-io</id>
+   <content type="html">&lt;p&gt;Lately I&amp;#8217;ve been lucky enough to work along with the excellent guys and gals at &lt;a href='http://converser.io'&gt;Converser&lt;/a&gt;. It&amp;#8217;s a startup creating a solid platform for developers to add feedback functionality and a two-way communications channel to their mobile apps. As a front end developer I&amp;#8217;ve been able to help bring their new website online.&lt;/p&gt;
+
+&lt;p&gt;Do check it out, it can be found at &lt;a href='http://converser.io'&gt;converser.io&lt;/a&gt;.&lt;/p&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>New site: Liz Wright Therapy</title>
+   <link href="http://hop.ie/blog/new-site-liz-wright-therapy"/>
+   <updated>2011-08-03T00:00:00-04:00</updated>
+   <id>http://hop.ie/blog/new-site-liz-wright-therapy</id>
+   <content type="html">&lt;p&gt;Announcing a new site for &lt;a href='http://www.dublintherapy.ie' title='dublin psychotherapy'&gt;Dundrum-based psychotherapist&lt;/a&gt; Liz Wright! Offering private therapy across a wide range of needs, Liz has a reputation as a wonderful listener and excellent therapist. Take the opportunity to help yourself and get in touch.&lt;/p&gt;
+
+&lt;p&gt;Visit &lt;a href='http://www.dublintherapy.ie'&gt;Liz Wright Therapy, Dublin&lt;/a&gt; now. Go on, you&amp;#8217;d be mad not to.&lt;/p&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>Wordpress plugin: QR Print</title>
+   <link href="http://hop.ie/blog/wordpress-plugin-qr-print"/>
+   <updated>2011-07-04T00:00:00-04:00</updated>
+   <id>http://hop.ie/blog/wordpress-plugin-qr-print</id>
+   <content type="html">&lt;p&gt;Introducing a neat little plugin I&amp;#8217;m working on, &lt;a href='http://wordpress.org/extend/plugins/qr-print/'&gt;QR Print&lt;/a&gt;. It simply adds a QR code that contains the current page URL to the bottom of your page. It also hides it so that it only shows on the printed version of your page.&lt;/p&gt;
+
+&lt;p&gt;It works by making use of the Google Chart API. Google has a range of image-generating stuff that includes pretty pie charts and graphs, and also includes a handy QR code generator.&lt;/p&gt;
+
+&lt;p&gt;By creating a URL like the following, you can generate a QR code on the fly:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;http://chart.apis.google.com/chart?chs=200x200&amp;amp;cht=qr&amp;amp;chld=|0&amp;amp;chl=YOUR+TEXT+HERE&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;In this case, the text &amp;#8220;Your Text Here&amp;#8221; would be encoded into the image.&lt;/p&gt;
+
+&lt;p&gt;The only additional functionality I added was some code to determine what the current page URL was, and then passed that into the above Google URL. Simple as. If you enjoy the plugin, feel free to leave a rating at the &lt;a href='http://wordpress.org/extend/plugins/qr-print/'&gt;Wordpress listing page&lt;/a&gt; for QR Print. Thank you!&lt;/p&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>Adding a human touch</title>
+   <link href="http://hop.ie/blog/adding-a-human-touch"/>
+   <updated>2011-05-25T00:00:00-04:00</updated>
+   <id>http://hop.ie/blog/adding-a-human-touch</id>
+   <content type="html">&lt;p&gt;We&amp;#8217;re all familiar with robots.txt, a standard way to direct the search engine bots to pages we want them to index. A site I stumbled across yesterday adds an interesting twist the idea by introducing a way to give the fleshy non-robotic contributors some love. &lt;a href='http://humanstxt.org/'&gt;HumansTXT.org&lt;/a&gt; is a simple idea, just a text file (humans.txt) added to the root of the site structure, which lists each person involved in a project along with a summary of what they do.&lt;/p&gt;
+
+&lt;p&gt;The humanstxt.org site includes the following instructions for getting set up:&lt;/p&gt;
+&lt;em&gt;Create a text file called &lt;strong&gt;humans.txt&lt;/strong&gt; (always in lower-case) and make it &lt;strong&gt;UTF-8&lt;/strong&gt; encoded to avoid issues with special characters and multiple languages.&lt;/em&gt;&lt;ol&gt;
+	&lt;li&gt;&lt;em&gt;Place a reference to the file in the  of the site:&lt;/em&gt;&lt;/li&gt;
+	&lt;li&gt;&lt;em&gt;For the sake of clarity and to keep a basic visual structure, you can use the headings /*TEAM*/ and /*SITE*/ to separate the human team from other information about the website.&lt;/em&gt;&lt;/li&gt;
+	&lt;li&gt;&lt;em&gt;Include the following information about every human involved in the project: role, name, contact, twitter, geolocation, etc. Please be aware that you may have to deal with spam if you include email addresses.&lt;/em&gt;&lt;/li&gt;
+	&lt;li&gt;&lt;em&gt;You can also include additional information about the site, such as the date of the last update (YYYY/MM/DD), its main language, its Doctype and other components, tools and software used on the development.&lt;/em&gt;&lt;/li&gt;
+	&lt;li&gt;&lt;em&gt;Save the file and place it in your site root.&lt;/em&gt;&lt;/li&gt;
+	&lt;li&gt;&lt;em&gt;Add the humansTXT button to your site and link it to your humansTXT file.&lt;/em&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;An &lt;a href='http://humanstxt.org/humans.txt'&gt;example&lt;/a&gt; can be found on their site.&lt;/p&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>Looking back to look forward</title>
+   <link href="http://hop.ie/blog/looking-back-to-look-forward"/>
+   <updated>2011-04-27T00:00:00-03:00</updated>
+   <id>http://hop.ie/blog/looking-back-to-look-forward</id>
+   <content type="html">&lt;p&gt;A side effect of migrating across the world is the opportunity to look back at what I&amp;#8217;ve done in the past, and sometimes it&amp;#8217;s equally encouraging to see how much things have changed, at the same time as how much has stayed the same. An example is the &lt;a href='http://www.donovanhutchinson.com/msc'&gt;old coursework website I put together in 2002&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;When we were asked to put our coursework online, every other student made use of the faculty-provided hosting. While it didn&amp;#8217;t offer a huge amount of space, it was fast loading within the campus and free. It was also deleted every year. Perhaps just trying to be different, I put mine up on my own shared hosting in the USA. I&amp;#8217;m glad I did, as it&amp;#8217;s interesting to look back and see how well (or badly) the work has aged.&lt;/p&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>Less Kiwi, More Liffey</title>
+   <link href="http://hop.ie/blog/less-kiwi-more-liffey"/>
+   <updated>2011-03-15T00:00:00-03:00</updated>
+   <id>http://hop.ie/blog/less-kiwi-more-liffey</id>
+   <content type="html">&lt;p&gt;The three of us have managed the epic voyage from New Zealand, through Kuala Lumpur, and Belfast, and are now back in Ireland! It&amp;#8217;s great to be back.&lt;/p&gt;
+
+&lt;p&gt;Now that the jet lag has passed, I&amp;#8217;m on the lookout for some work. With that in mind, I&amp;#8217;ve put &lt;a href='/cv/'&gt;my cv online&lt;/a&gt;, and it&amp;#8217;s also available to download in Word format &lt;a href='/cv.doc'&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;In the meantime, have a great Paddy&amp;#8217;s day week, and here&amp;#8217;s hoping this lovely weather stays so mild.&lt;/p&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>Techzing: for web and software developers</title>
+   <link href="http://hop.ie/blog/techzing-podcast"/>
+   <updated>2010-12-12T00:00:00-03:00</updated>
+   <id>http://hop.ie/blog/techzing-podcast</id>
+   <content type="html">&lt;p&gt;As web developers, we like to try to keep up to date with what's happening in the industry, share stories and find out what people are up to. Working from home can limit the exposure to like-minded individuals, and one of the best ways to make up for this is podcasts.&lt;/p&gt;&lt;p&gt;There are a wealth of podcasts covering everything from technology news, web platform specific discussion, start-ups and more, but the one we keep coming back to is &lt;a href='http://www.techzinglive.com'&gt;Techzing&lt;/a&gt;.&lt;/p&gt;&lt;p&gt;Run by Justin Vincent and Jason Roberts, the show combines a laid-back discussion style in which they discuss any industry news along with their own web projects, and industry interviews where they bring in a wide variety of interesting and informed guests to discuss what they do.&lt;/p&gt;&lt;p&gt;Justin's project &lt;a href='http://pluggio.com/'&gt;Pluggio&lt;/a&gt;, and Jason's &lt;a href='http://www.appignite.com/'&gt;AppIgnite&lt;/a&gt; are often discussed, and the two share insights as what works or doesn't work when it comes to setting up and promoting an online software service.&lt;/p&gt;&lt;p&gt;By sharing their own experiences in a frank and engaging manner, the show manages to stay light and personal and keeps the discussions lively and fun. Check it out!&lt;/p&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>Amazon API Update: iframe reviews</title>
+   <link href="http://hop.ie/blog/amazon-api-update-iframe-reviews"/>
+   <updated>2010-11-14T00:00:00-03:00</updated>
+   <id>http://hop.ie/blog/amazon-api-update-iframe-reviews</id>
+   <content type="html">&lt;p&gt;Something we make extensive use of on our shopping site, &lt;a href='http://www.shopireland.ie'&gt;ShopIreland.ie&lt;/a&gt;, is &lt;a href='https://affiliate-program.amazon.co.uk/gp/advertising/api/detail/main.html'&gt;Amazon’s product API&lt;/a&gt;. Last week there was a change in how they present their reviews, and this article aims to cover how to make use of the new iframe method.&lt;/p&gt;
+
+&lt;p&gt;If you’re reading this, it’s assumed that you are already using Amazon’s API and have access to the XML data being returned. They way we handle the data is by using PHP’s SimpleXML extension.&lt;/p&gt;
+
+&lt;h2 id='whats_changed'&gt;What’s Changed?&lt;/h2&gt;
+
+&lt;p&gt;Until recently, Amazon provided reviews in the product feed, along with an average rating and the total number of reviews. These are no longer provided. In their place, Amazon supply an iframe URL. In the feed data being returned, this URL is found here:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Items-&amp;gt;Item-&amp;gt;CustomerReviews-&amp;gt;IFrameURL&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The URL provided looks something like this:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;http://www.amazon.co.uk/reviews/iframe?akid=doodlydoo&amp;amp;alinkCode=xm2&amp;amp;asin=0718154770&amp;amp;atag=your-associate-tag&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id='how_to_use_the_iframe_url'&gt;How to use the iframe URL&lt;/h2&gt;
+
+&lt;p&gt;While we would never claim that this is the only way to handle an iframe, we have found this way looks good on our site. You will want to experiment with your own page layout to make the most of this new content. We display the iframe using the following:&lt;/p&gt;
+
+&lt;h2 id='height_of_1280'&gt;Height of 1280?&lt;/h2&gt;
+
+&lt;p&gt;As we are using an iframe, it will often have scrollbars to scroll through the supplied content. In the majority of cases, we found that setting the review iframe height at 1280 was just enough to display all the returned content without the need for scrollbars. One downside of this is that if there are no reviews, there will be a tall gap in your page. Your site’s design may allow for this, but if not, try different heights to find what works best for you.&lt;/p&gt;
+
+&lt;h2 id='editorial_reviews'&gt;Editorial Reviews&lt;/h2&gt;
+
+&lt;p&gt;Please note that the EditorialReviews data is still provided. Thankfully!&lt;/p&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>24TheWeb Completes 3 Websites!</title>
+   <link href="http://hop.ie/blog/24theweb-completes-3-websites"/>
+   <updated>2010-11-14T00:00:00-03:00</updated>
+   <id>http://hop.ie/blog/24theweb-completes-3-websites</id>
+   <content type="html">&lt;p&gt;24theweb completes 3 websites!&lt;/p&gt;
+
+&lt;p&gt;We were late to hear about the &lt;a href='http://24theweb.com/'&gt;24theweb&lt;/a&gt; project, an Irish collaboration to get some crazy people together to build 3 awesome websites in 24 hours for charity. Well done to them, the &lt;a href='http://24theweb.com/2010/11/the-sites/'&gt;end result&lt;/a&gt; speaks for itself.&lt;/p&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>Multiple sidebars in Wordpress</title>
+   <link href="http://hop.ie/blog/set-multiple-sidebars-wordpress"/>
+   <updated>2010-11-12T00:00:00-03:00</updated>
+   <id>http://hop.ie/blog/set-multiple-sidebars-wordpress</id>
+   <content type="html">&lt;p&gt;While &lt;a href='http://www.wordpress.org'&gt;Wordpress&lt;/a&gt; was originally developed for use as a blogging tool, it is frequently used to control entire websites. By default, most themes will have the same sidebar on each page. This guide will show how to set up multiple named sidebars and control the content of each individually. This guide assumes you have access to the theme files.&lt;/p&gt;
+
+&lt;h2 id='step_1_define_your_sidebars'&gt;Step 1: Define your sidebars&lt;/h2&gt;
+
+&lt;p&gt;Either in a text editor, or under &lt;em&gt;Themes-&amp;gt;Editor&lt;/em&gt;, open the file &amp;#8220;functions.php&amp;#8221;. This is the file that tells your theme that it is going to have multiple sidebars. For the purposes of this example, we will be setting up custom sidebars for each of the &amp;#8220;home&amp;#8221;, &amp;#8220;about us&amp;#8221;, &amp;#8220;blog&amp;#8221; and &amp;#8220;contact us&amp;#8221; pages. You may wish to edit this to fit your needs.&lt;/p&gt;
+
+&lt;p&gt;The following text might already be in your functions.php file:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;if ( function_exists(&amp;#39;register_sidebar&amp;#39;) )&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You&amp;#8217;ll want to replace it with something like this:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;if ( function_exists(&amp;#39;register_sidebar&amp;#39;) ) {
+  register_sidebar(array(
+    &amp;#39;name&amp;#39; =&amp;gt; &amp;#39;Home&amp;#39;,
+    &amp;#39;description&amp;#39; =&amp;gt; &amp;#39;Your homepage sidebar.&amp;#39;,
+    &amp;#39;before_title&amp;#39; =&amp;gt; &amp;#39;&amp;lt;h2&amp;gt;&amp;#39;,
+    &amp;#39;after_title&amp;#39; =&amp;gt; &amp;#39;&amp;lt;/h2&amp;gt;&amp;#39;
+  ));
+
+  register_sidebar(array(
+    &amp;#39;name&amp;#39; =&amp;gt; &amp;#39;About&amp;#39;,
+    &amp;#39;description&amp;#39; =&amp;gt; &amp;#39;Your about us sidebar.&amp;#39;,
+    &amp;#39;before_title&amp;#39; =&amp;gt; &amp;#39;&amp;lt;h2&amp;gt;&amp;#39;,
+    &amp;#39;after_title&amp;#39; =&amp;gt; &amp;#39;&amp;lt;/h2&amp;gt;&amp;#39;
+  ));
+
+  register_sidebar(array(
+    &amp;#39;name&amp;#39; =&amp;gt; &amp;#39;Blog&amp;#39;,
+    &amp;#39;description&amp;#39; =&amp;gt; &amp;#39;Blog, and default fallback sidebar.&amp;#39;,
+    &amp;#39;before_title&amp;#39; =&amp;gt; &amp;#39;&amp;lt;h2&amp;gt;&amp;#39;,
+    &amp;#39;after_title&amp;#39; =&amp;gt; &amp;#39;&amp;lt;/h2&amp;gt;&amp;#39;
+  ));
+
+  register_sidebar(array(
+    &amp;#39;name&amp;#39; =&amp;gt; &amp;#39;Contact&amp;#39;,
+    &amp;#39;description&amp;#39; =&amp;gt; &amp;#39;Contact us sidebar.&amp;#39;,
+    &amp;#39;before_title&amp;#39; =&amp;gt; &amp;#39;&amp;lt;h2&amp;gt;&amp;#39;,
+    &amp;#39;after_title&amp;#39; =&amp;gt; &amp;#39;&amp;lt;/h2&amp;gt;&amp;#39;
+  ));
+}&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Save the functions file and if necessary, upload it to your theme folder. &lt;h3&gt;What is this code doing?&lt;/h3&gt; The &lt;a href='http://codex.wordpress.org/Function_Reference/register_sidebar'&gt;register_sidebar&lt;/a&gt; function is being called here to define each of the sidebars. The &lt;a href='http://codex.wordpress.org/Function_Reference/register_sidebar'&gt;reference&lt;/a&gt; explains the various options you can use when setting up these sidebars. In this case, we have defined 4 different sidebars and given them names that correspond to where they will be used. &lt;h2&gt;Step 2: Connecting the sidebars to their pages&lt;/h2&gt; Now that we&amp;#8217;re told Wordpress that we will need 4 sidebars, we not need to connect them to existing pages. For this you need to take note of the page IDs of each page we will be working with. &lt;h3&gt;Page IDs&lt;/h3&gt; The easiest way to obtain the page ID is to browse to your &lt;em&gt;Pages&lt;/em&gt; menu in the admin area. Hover your cursor over the title of each page, and you should see the page ID in the address that appears in the bottom of the browser window. It should read something like &lt;em&gt;...post.php?post=5&lt;/em&gt;, where 5 is the page&amp;#8217;s ID.&lt;/p&gt;
+
+&lt;p&gt;Go through each of your pages and take note of each ID, as they will be needed next. &lt;h3&gt;Sidebar.php&lt;/h3&gt; Open the file sidebar.php. In this file we will add the code that connects your page IDs to their named sidebars. The code looks like this:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;// dynamic_sidebar()
+if (is_page(2)) dynamic_sidebar(&amp;#39;Home&amp;#39;);
+elseif (is_page(4)) dynamic_sidebar(&amp;#39;About&amp;#39;);
+elseif (is_page(6)) dynamic_sidebar(&amp;#39;Contact&amp;#39;);
+else dynamic_sidebar(&amp;#39;Blog&amp;#39;);&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You will need to replace the numbers (2,4,6) in this code with the corresponding IDs from earlier. Place this code into your sidebar.php file where you would like your sidebar html to appear. This is usually within a sidebar div or similar.&lt;/p&gt;
+
+&lt;p&gt;Upload or save sidebar.php when you&amp;#8217;re finished editing. &lt;h3&gt;What is this code doing?&lt;/h3&gt; This code looks at the current page ID, and chooses the right sidebar to show. If none is found, it falls back to using the &amp;#8220;Blog&amp;#8221; sidebar by default. If you want to adapt the code, you could set up more sidebars for other instances. &lt;h2&gt;Step 3: Customise your sidebar content&lt;/h2&gt; Now that the code is in place, navigate to &lt;em&gt;Appearance-&amp;gt;Widgets&lt;/em&gt;. You should see your newly created sidebars on the right side of the screen. You can now place whatever individual content you need in each sidebar.&lt;/p&gt;</content>
+ </entry>
+ 
+ 
+</feed>

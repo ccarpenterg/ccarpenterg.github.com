@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title> Designing for speed -  hop.ie</title>
+    <meta name="description" content="If your website was built this way, you'd be on the homepage by now.">
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="/stylesheets/screen.css">
+    
+    <link rel="stylesheet" href="/stylesheets/stripes.css">
+    
+
+    
+
+    <!--[if IE]>
+      <link rel="stylesheet" href="/stylesheets/ie.css">
+    <![endif]-->
+    <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular" rel="stylesheet" type="text/css">
+    <link href='http://fonts.googleapis.com/css?family=Source+Code+Pro' rel="stylesheet" type="text/css">
+    <link rel="canonical" href="/blog/designing-for-speed">
+    <meta name="google-site-verification" content="4b2gG2_kr5STLh0RhE34iPvU59o591CoG9N6iYOazvw" />
+    <script src="/javascripts/modernizr.js"></script>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script src="http://d3js.org/queue.v1.min.js"></script>
+</head>
+<body >
+  <div class="page-container">
+  	<header>
+  	</header>
+
+  	<div class="page clearfix">
+    	<section class="content">
+    		<article>
+
+	<header>
+	  <h1>Designing for speed</h1>
+	  <p class="date">July 27, 2012</p>
+	</header>
+
+	<section class="entry"><p>The speed of your website is a huge factor in how people perceive the quality of your content. By following some simple tips, you&#8217;ll be able to ensure your site responds quickly enough to encourage visitors to stick around.</p>
+
+<h2 id='a_timely_issue'>A timely issue</h2>
+
+<p>Jakob Nielsen <a href='http://www.useit.com/alertbox/9703a.html'>has been advocating since 1993</a> that loading times are the most valued aspect of a website. Even <a href='http://www.useit.com/alertbox/response-times.html'>in 2010</a> his research was showing the same desperate need for speed. Though our connectivity has improved dramatically since then, changes in the way we use the web has brought speed back into focus.</p>
+
+<h2 id='phones'><del>Smart</del>phones</h2>
+
+<p>Smartphone use might be reaching 4G speeds in some places, but for most people using mobile devices over the phone networks, the speed is much worse than landline connections. It&#8217;s also a fact that a massive number of people, particularly in <a href='http://afrinnovator.com/blog/2012/02/02/why-you-must-never-forget-about-the-humble-feature-phone-in-africa/'>Africa</a> and <a href='http://www.engadget.com/2012/07/19/smartphone-internet-china/'>much of Asia</a>, are using their phones as a primary Internet connection.</p>
+
+<p>You simply cannot assume that your users will be on fast connections. They could well be on a train or outside the cities, relying on an edge connection or satellite broadband.</p>
+
+<h2 id='500_improvement'>500% improvement</h2>
+
+<p><a href='http://shopireland.ie'>ShopIreland.ie</a>, a shopping comparison site launched in 2005, is a site I managed and put in place some of the following ideas to improve speed.</p>
+
+<p>As a result of some pretty straightforward client-side tweaks, I brought down the typical page load time from over 5 seconds to as low as 1 second.</p>
+
+<h2 id='manage_your_graphics'>Manage your graphics</h2>
+
+<p>Possibly the biggest improvement to Shop Ireland came about from putting the main colour scheme images into <a href='http://www.shopireland.ie/images/all.png'>one sprite file</a>. While the graphics in use could be redone using CSS now, at the time the CSS3 effects were not well supported. Instead, I combined the images into one PNG file, and used the background-position property in CSS to theme different sections of the site. While this didn&#8217;t cut a huge amount off the initial page load, the cached image loads instantly on subsequent page loads.</p>
+
+<p>Using up-to-date CSS is now a viable option, and if you can make use of gradients, border-radius, background sizes and the many CSS3 options, you should be able to get rid of most of your presentational images.</p>
+
+<p>This blog also uses very few images. To try to ensure the important part of the blog, namely the content, got to the screen fastest, I even built the bouncy logo character using HTML &amp; CSS. If you&#8217;re browsing this on a recent browser (Chrome or Safari, for instance), the logo is described in just a bunch of CSS instead of an image. I&#8217;ve also tried where possible to make use of background colours and gradients to minimise the number of images.</p>
+
+<h2 id='use_the_clouds'>Use the clouds</h2>
+
+<p>Distributing your assets is a great way speed up sites. Popular javascript tools such as jQuery can be cached by the browser, so it&#8217;s possible your visitors might not even need to download it again. You can even go further and host javascript template fragments or images on different content delivery networks. This allows your browser to make more simultaneous connections and make better use of your bandwidth.</p>
+
+<h2 id='combine__minify'>Combine &amp; minify</h2>
+
+<p>Often the biggest overhead in page loading speed is when the browser is looking up the connection. If you open many connections, these lookups will stack up and cause a significant delay. Get around this by combining CSS files into one, and ensuring they are minified. Ensuring that your server serves these assets using GZIP will have help massively too. It&#8217;s not uncommon for CSS files over 30 or 40KB to end up less than 5KB after compression.</p>
+
+<p>The same goes for Javascript files. The fewer connections the browser needs to make, the faster things will arrive.</p>
+
+<h2 id='load_order'>Load order</h2>
+
+<p>Put your CSS in the head, and your Javascript before the closing <em>body</em> tag.</p>
+
+<h2 id='go_static__caching'>Go static &amp; caching</h2>
+
+<p>While it doesn&#8217;t count as a &#8220;client-side&#8221; tweak, this is something I&#8217;ve put into practice here on this blog and I felt it worth mentioning. Making static versions of your pages or site content will cut out a decent chunk of server-side processing time. In the case of this blog, I was able to eliminate my old Wordpress installation and publish directly using HTML pages. A busy server trying to serve up a Wordpress blog can easily add a second or two to the page load time, if not more in some cases.</p>
+
+<h2 id='helpful_tools'>Helpful tools</h2>
+
+<p>Last year Google introduced Page Speed as a metric for all Analytics accounts. They also offer some great <a href='https://developers.google.com/speed/pagespeed/'>browser plugins and services</a> to help speed up sites.</p>
+
+<p>Yahoo&#8217;s <a href='http://developer.yahoo.com/yslow/'>YSlow</a> is another great tool to help identify the weak points in your page loading times.</p>
+
+<p>If you need assistance setting up image sprites, <a href='http://spritepad.wearekiss.com/'>Sprite Pad</a> is an interesting tool. Alternately, <a href='http://www.spritecow.com/'>SpriteCow</a> seems pretty cool.</p></section>
+
+	<section class="tags">
+	  <ul>
+	    <li>Filed under:</li>
+	  
+	    <li><a href="#">Websites</a></li>
+	  
+	  </ul>
+	</section>
+
+</article>
+
+
+    	</section>
+    </div>
+  </div>
+	<footer class="clearfix">
+	  <section class="footer-content">
+	    <p>I am <a href="http://github.com/ccarpenterg">ccarpenterg on Github</a>, and <a href="https://alpha.app.net/donovan">@donovan</a> on app.net.</p>
+		</section>
+	</footer>
+
+  <script id="bouncer-template" type="text/html">
+    <span class="mask"></span>
+    <span class="bounce1"></span>
+	  <span class="bounce2"></span>
+	  <span class="bounce3"></span>
+	  <span class="bouncer">
+	    <span class="ear1"></span>
+	    <span class="ear2"></span>
+	    <span class="eye1"></span>
+	    <span class="eye2"></span>
+	    <span class="mouth"></span>
+	  </span>
+  </script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+  <script>window.jQuery || document.write('<script src="/javascripts/jquery.min.js"><\/script>')</script>
+  <script src="/javascripts/main.js"></script>
+  <script src="/javascripts/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+
+
+
+  <script type="text/javascript">
+
+    var _gaq = _gaq || [];
+    
+    _gaq.push(['_setAccount', 'UA-3481417-23']);
+    _gaq.push(['_setDomainName', 'hop.ie']);
+    _gaq.push(['_setSiteSpeedSampleRate', 10]);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,604 @@
+@import base
+@import googlecode_highlighting
+
+*
+  /* Some font love
+  -webkit-font-smoothing: antialiased
+
+html
+  font-family: "PT Serif", Georgia, Times, "Times New Roman", serif
+  @include text-shadow()
+  color: $font-color
+  
+body
+  margin: 0
+  background-color: $font-color
+  border-top: 20px solid $font-color
+
+/* Headings
+
+h1
+  @include adjust-font-size-to(40px)
+
+/* Links
+
+a
+  color: $link-color
+  text-decoration: none
+  font-weight: bold
+  @include transition(color 0.2s ease-out)
+  
+  &:visited, &:active
+    color: $link-color-visited
+  
+  &:hover
+    color: $hover-color
+    @include transition(color 0.2s ease-out)
+
+acronym
+  border-bottom: 1px dashed $font-color
+
+  &:hover
+    cursor: help
+
+input
+  background-color: #fff
+  @include adjust-font-size-to(16px)
+  @include border-radius(5px)
+  padding: 4px 14px
+  display: inline-block
+  border: 2px solid #ddd
+
+/* Page structure
+
+.page-container
+  background-color: $background-color
+  padding-bottom: 20px
+  
+.page, header, footer
+  max-width: 720px
+  margin: 0 auto
+
+.page-container
+  border-bottom: 2px solid #fff
+
+header
+  min-height: 120px
+  position: relative
+  
+footer
+  padding-bottom: 40px
+  background-color: $font-color
+  z-index: 10
+  
+  p
+    color: $background-color
+    text-shadow: none
+    @include padding-leader()
+    margin: 0
+    
+  a, a:visited
+    color: $footer-font-color
+
+/* Post layout bits
+
+article header
+  min-height: 0
+  
+  .date
+    font-family: "PT Sans", Helvetica, Arial, sans-serif
+    margin-top: -36px
+    color: #888
+    
+section.content, section.footer-content
+  width: 100%
+  float: left
+  padding-right: 5%
+
+section.footer-content
+  z-index: 10
+
+sidebar
+  width: 20%
+  float: right
+  @include opacity(0.6)
+  @include transition(opacity 0.2s ease-out)
+  
+  &:hover
+    @include opacity(1)
+    @include transition(opacity 0.2s ease-out)
+  p
+    @include leader(2)
+    @include adjust-font-size-to(18px)
+    color: #888
+    
+.entry
+  z-index: 4
+
+  aside
+    @include rhythm-borders()
+
+.tags
+
+  ul
+    padding: 0
+    margin: 0
+    @include trailer()
+
+  li
+    list-style: none
+    display: inline-block
+    @include adjust-font-size-to(16px)
+    margin: 0
+      
+    a
+      color: $font-color
+
+.sharing
+  
+  ul
+    padding: 0
+
+  li
+    list-style: none
+    display: inline-block
+    background-color: #ddd
+    border: 1px solid #fff
+    @include border-radius(5px)
+    padding: 5px 8px
+    z-index: 5
+    position: relative
+    @include adjust-font-size-to(16px)
+    margin: 0
+    
+    &::before
+      content: ""
+      display: block
+      position: absolute
+      top: 0
+      left: 0
+      right: 0
+      bottom: 0
+      border: 4px solid #ccc
+      z-index: 0
+      @include border-radius(5px)
+      
+    a
+      color: $font-color
+
+code 
+  background-color: #fff
+  @include adjust-font-size-to(16px)
+  @include border-radius(5px)
+  padding: 0 8px
+  display: inline-block
+  border: 1px solid #EEE
+  font-family: 'Source Code Pro', sans-serif
+
+pre code
+  padding: 10px 16px
+  tab-size: 2
+
+
+.bouncer-container *
+  position: absolute
+
+.bouncer-container
+  position: absolute
+  margin: 0
+  width: 200px
+  height: 100px
+  top: 80px
+
+
+  a
+    text-indent: -9999px
+    z-index: 0
+  
+    &:hover
+      .bouncer
+        background-color: $bouncer-color-hover
+        @include transition(background-color 0.2s ease-out)
+        cursor: pointer
+      .ear1, .ear2
+        background-color: $bouncer-color-hover
+        @include transition(background-color 0.2s ease-out)
+
+  .mask
+    width: 200px
+    height: 38px
+    position: absolute
+    top: 42px
+    left: -50px
+    background-color: $background-color
+    z-index: 1
+
+  .bouncer
+    top: 21px
+    left: -50px
+    width: 50px
+    height: 60px
+    background-color: $bouncer-color
+    @include transition(background-color 0.2s ease-out)
+    @include border-radius(25px, 30px)
+    @include opacity(0)
+    z-index: 2
+    
+  .bouncer-end-position
+    top: 10px
+    left: 104px
+    @include opacity(1)  
+
+  .ear1, .ear2
+    width: 8px
+    height: 28px
+    background-color: $bouncer-color
+    @include transition(background-color 0.2s ease-out)
+    @include border-radius(50%, 50%)
+
+  .ear1
+    top: -12px
+    left: 10px
+    @include rotate(-15deg)
+  
+  .ear2
+    top: -12px
+    right: 10px
+    @include rotate(15deg)
+  
+  .eye1, .eye2
+    top: 10px
+    left: 20px
+    background-color: $background-color
+    width: 5px
+    height: 6px
+    @include border-radius(50%, 50%)
+  
+  .eye1
+    top: 12px
+    left: 22px
+  
+  .eye2
+    top: 12px
+    left: 32px
+  
+  .mouth
+    top: 24px
+    left: 22px
+    width: 15px
+    height: 8px
+    background-color: $background-color
+    @include border-bottom-radius(25px)
+
+  .bounce1::before, .bounce2::before, .bounce3::before, .bounce3::after
+    z-index: -2
+
+  .bounce1
+    top: 47px
+    left: -49px
+    width: 70px
+    height: 80px
+    background-color: $bouncer-color
+    @include border-radius(50%, 50%)
+    @include opacity(0.05)
+    @include rotate(20deg)
+  
+    &::before
+      content: " "
+      position: absolute
+      background-color: $background-color
+      top: 7px
+      width: 78px
+      height: 85px
+      @include border-radius(50%, 50%)
+
+  .bounce2
+    top: 43px
+    left: 20px
+    width: 70px
+    height: 80px
+    background-color: $bouncer-color
+    @include border-radius(50%, 50%)
+    @include opacity(0.15)
+    @include rotate(15deg)
+
+    &::before
+      content: " "
+      position: absolute
+      background-color: $background-color
+      top: 7px
+      left: -1px
+      width: 76px
+      height: 85px
+      @include border-radius(50%, 50%)
+    
+  .bounce3
+    top: 47px
+    left: 88px
+    width: 70px
+    height: 80px
+    background-color: $bouncer-color
+    @include border-radius(50%, 50%)
+    @include opacity(0.4)
+    @include rotate(25deg)
+
+    &::before
+      content: " "
+      position: absolute
+      background-color: $background-color
+      top: 9px
+      left: -1px
+      width: 76px
+      height: 85px
+      @include border-radius(50%, 50%) 
+    &::after
+      content: " "
+      position: absolute
+      background-color: $background-color
+      top: -28px
+      left: -9px
+      width: 100px
+      height: 60px
+      @include border-radius(50%, 50%) 
+      
+/* Override for older browsers
+html.no-js .bouncer-container
+  a
+    background: url(/images/bouncer.png) no-repeat
+    height: 100px
+    width: 220px
+    left: -50px
+    top: -10px
+    
+    &:hover
+      background-image: url(/images/bouncer-hover.png)
+  .mask, .bouncer, .bounce1, .bounce2, .bounce3
+    display: none      
+      
+      
+.move-mask
+  @include animation-name(move-box)
+  @include animation-duration(2s)
+  @include animation-fill-mode(forwards)
+
+.move-bouncer
+  @include animation-name(move-bouncer)
+  @include animation-duration(2s)
+  @include animation-fill-mode(forwards)
+
+
+@include keyframes(move-box)
+  29%, 32%
+    left: 21px
+  62%, 65%
+    left: 91px
+    width: 100px
+  96%, 100%
+    left: 161px
+    width: 10px
+
+@include keyframes(move-bouncer)
+  0%
+    height: 40px
+    @include border-radius(25px, 20px)
+    top: 42px
+  15%
+    top: 0
+    height: 60px
+    @include border-radius(25px, 30px)
+  30%, 33%
+    top: 42px
+    left: 21px
+    @include opacity(1)
+    height: 40px
+    @include border-radius(25px, 20px)
+  45%
+    top: 0
+    @include opacity(1)
+    height: 60px
+    @include border-radius(25px, 30px)
+  63%, 64%
+    top: 42px
+    left: 91px
+    @include opacity(1)
+    height: 40px
+    @include border-radius(25px, 20px)
+  74%, 100%
+    top: 10px
+    left: 104px
+    @include opacity(1)
+    height: 60px
+    @include border-radius(25px, 30px)
+    
+    
+/* Apple logo colours
+
+.apple, .butt:before, .top span:after, .butt:after
+  background: $font-color
+
+  .top
+    background: #415259
+    span
+      background: #415259
+    &:before, &:after
+      background: $font-color
+
+  .butt
+    span
+      background: #415259
+    background: #415259
+    &:before, &:after
+      background: $font-color
+
+  .bite
+    background: #415259
+
+.apple.colour
+  @include background-image(linear-gradient(#60bb44 0, #60bb44 16.6666667%, #fcb827 16.6666667%, #fcb827 33.33333%, #f6821f 33.33333%, #f6821f 50%, #df3a3e 50%, #df3a3e 66.666667%, #963d97 66.666667%, #963d97 83.33333%, #029ddd 83.33333%, #029ddd 100%))
+  
+  .butt:before, .butt:after
+    background-color: #029ddd
+
+  .top:after, .top:before, .top span::after
+    background-color: #60bb44
+
+@-webkit-keyframes spinY 
+  0%
+    -webkit-transform: rotateY(0deg)
+    -webkit-transform-origin: 0% 0% 5  
+  100%
+    -webkit-transform: rotateY(360deg)
+    -webkit-transform-origin: 0% 0% 5
+
+.apple-container
+  width: 40px
+  height: 40px
+  background-color: #415259
+  @include border-radius(35px)
+  position: relative
+  overflow: hidden
+  @include transition(width 0.2s ease-out)
+  margin-top: 1em
+
+  p
+    opacity: 0
+    font-family: 'Helvetica Neue', 'Helvetica', Arial, Sans-serif
+    font-weight: bold
+    padding: 0 0 0 45px
+    line-height: 42px
+    font-size: 14px
+    @include transition(all 0.2s ease-out)
+    width: 260px
+    color: $font-color
+
+  &:hover
+    width: 180px
+    background-color: $background-color
+    @include transition(width 0.2s ease-out)
+
+    .apple
+      @include background-image(linear-gradient(#60bb44 0, #60bb44 16.6666667%, #fcb827 16.6666667%, #fcb827 33.33333%, #f6821f 33.33333%, #f6821f 50%, #df3a3e 50%, #df3a3e 66.666667%, #963d97 66.666667%, #963d97 83.33333%, #029ddd 83.33333%, #029ddd 100%))
+      -webkit-animation: spinY 2s linear infinite
+
+      .top
+        background: $background-color
+        span
+          background: $background-color
+
+      .butt
+        span
+          background: $background-color
+        background: $background-color
+
+      .bite
+        background: $background-color
+
+    .butt:before, .butt:after
+      background-color: #029ddd
+
+    .top:after, .top:before, .top span::after
+      background-color: #60bb44
+
+    p
+      opacity: 1
+      @include transition(all 0.2s ease-out)
+
+/* Shape
+
+.apple
+  width: 25px
+  height: 22px
+  border-radius: 36% 36% 41% 41% / 42% 42% 75% 75%
+  position: absolute
+  top: 12px
+  left: 8px
+
+  .bite
+    position: absolute
+    width: 60%
+    height: 62%
+    right: -40%
+    top: 8%
+    border-radius: 60%
+
+  .butt
+    span
+      display: block
+      position: absolute
+      border-radius: 100% 100% 0% 0%
+      width: 24.5%
+      height: 400%
+      bottom: -239%
+      left: 38%
+    position: absolute
+    width: 100%
+    height: 4%
+    bottom: -1%
+    &:before
+      content: ''
+      position: absolute
+      width: 24%
+      height: 400%
+      border-radius: 0% 0% 100% 100%
+      left: 21%
+      bottom: 38%
+    &:after
+      content: ''
+      position: absolute
+      width: 23.4%
+      height: 400%
+      border-radius: 0% 0% 100% 100%
+      right: 21%
+      bottom: 38%
+
+  .top
+    span
+      display: block
+      position: absolute
+      border-radius: 0 0 60% 60%/0 0 100% 100%
+      width: 69%
+      height: 259%
+      top: -113%
+      left: 16%
+      z-index: 3
+      &:after
+        border-radius: 100% 0 100% 0
+        content: ""
+        height: 360%
+        left: 34%
+        position: absolute
+        top: -300%
+        width: 96%
+    position: absolute
+    width: 42%
+    height: 4%
+    top: 0px
+    left: 29%
+    &:before
+      content: ''
+      position: absolute
+      width: 62%
+      height: 260%
+      border-radius: 100% 100% 0% 0% / 100% 200% 0% 0%
+      left: -27%
+      top: 1%
+    &:after
+      content: ''
+      position: absolute
+      width: 62%
+      height: 260%
+      border-radius: 100% 100% 0% 0% / 200% 100% 0% 0%
+      right: -27%
+      top: 1%
+
+.apple-container
+  display: none
+
+@media screen and (-webkit-min-device-pixel-ratio:0)
+  .apple-container
+    display: block
+  
+
+/* Overrides
+
+@import mediaqueries
