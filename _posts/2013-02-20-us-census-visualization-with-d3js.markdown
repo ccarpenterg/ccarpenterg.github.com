@@ -55,7 +55,7 @@ And in order to use the Census geographic data with D3.js you have to convert it
 When you're dealing with Geospatial data you need a tool to explore it and convert it to other formats. GDAL is shipped with two great tools
 to do this job: ``ogrinfo`` and ``ogr2ogr``. 
 
-ogrinfo is very useful to explore Shapefiles:
+[ogrinfo][6] is very useful to explore Shapefiles:
 
     ogrinfo -so gz_2010_us_050_00_20m.shp gz_2010_us_050_00_20m
 
@@ -85,14 +85,14 @@ GDAL also supports SQL language:
     ogrinfo -al gz_2010_us_050_00_20m.shp /
     -sql 'SELECT * FROM gz_2010_us_050_00_20m where STATE="21"'
 
-Since we now know what we want and how to get it we're ready to generate our GeoJSON file using ogr2ogr:
+Since we now know what we want and how to get it we're ready to generate our GeoJSON file using [ogr2ogr][7]:
 
     ogr2ogr -f geoJSON KY-counties.json -where 'STATE="21"' gz_2010_us_050_00_20m.shp
 
 ###Visualization
 
 Well now we have to visualize the data on the map so I've chosen the Choropleth map visualization to represent the population for each county.
-When it comes to styles D3.js is very straightforward. First define the classes styles:
+When it comes to styles D3.js is quite straightforward. First define the classes styles:
 
 {% highlight css %}
 .tier-1 { fill:rgb(229, 245, 224); }
@@ -112,9 +112,11 @@ svg.append("g")
     .attr("class", function (d) {}); // return the right class
 {% endhighlight %}
 
-###Conclusion
+###Further Reading
 
-Data visualization is a lot easier than before and D3.js makes it very exciting.
+- Census Bureau Data Visualization Gallery (without D3.js): http://www.census.gov/dataviz/
+- Unemployment rates in US (2008): http://bl.ocks.org/mbostock/4060606
+- US Airports Interactive Map: http://mbostock.github.com/d3/talk/20111116/airports.html
 
 <script src="/d3/KY-counties20.js">
 </script>
@@ -124,3 +126,5 @@ Data visualization is a lot easier than before and D3.js makes it very exciting.
 [3]: http://www.census.gov/acs/www/Downloads/handbooks/ACSGeneralHandbook.pdf
 [4]: http://www.geojson.org
 [5]: http://www.census.gov/geo/maps-data/data/tiger.html
+[6]: http://www.gdal.org/ogrinfo.html
+[7]: http://www.gdal.org/ogr2ogr.html
