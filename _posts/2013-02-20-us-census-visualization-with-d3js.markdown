@@ -114,9 +114,9 @@ svg.append("g")
 
 ###Further Reading
 
-- Census Bureau Data Visualization Gallery (without D3.js): http://www.census.gov/dataviz/
-- Unemployment rates in US (2008): http://bl.ocks.org/mbostock/4060606
-- US Airports Interactive Map: http://mbostock.github.com/d3/talk/20111116/airports.html
+- Census Bureau Data Visualization Gallery (without D3.js): [http://www.census.gov/dataviz/][8]
+- Unemployment rates in US (2008): [http://bl.ocks.org/mbostock/4060606][9]
+- US Airports Interactive Map: [http://mbostock.github.com/d3/talk/20111116/airports.html][10]
 
 <script src="/d3/KY-counties20.js">
 </script>
@@ -128,3 +128,6 @@ svg.append("g")
 [5]: http://www.census.gov/geo/maps-data/data/tiger.html
 [6]: http://www.gdal.org/ogrinfo.html
 [7]: http://www.gdal.org/ogr2ogr.html
+[8]: http://www.census.gov/dataviz/
+[9]: http://bl.ocks.org/mbostock/4060606
+[10]: http://mbostock.github.com/d3/talk/20111116/airports.html
