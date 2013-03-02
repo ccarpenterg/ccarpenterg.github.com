@@ -14,7 +14,7 @@ This is a Population Map of Kentucky Counties created using [D3.js][1], a Census
 inspired by the [American Community Survey Handbook][3].
 =--
 
-It's really easy to create a map using D3.js. You just need a GeoJSON file and you're done. Having said that you have to have a minimum skillset
+It's really easy to create a map using D3.js. You just need a [GeoJSON][4] file and you're done. Having said that you have to have a minimum skillset
 to process the data and a bit of experience on map projections:
 
 {% highlight javascript %}
@@ -35,10 +35,10 @@ svg.append("g")
 
 ###Census Geospatial Data and GeoJSON
 
-D3.js uses the GeoJSON format to display maps. The GeoJSON format supports a variety of geographic data structures like 
+D3.js uses the GeoJSON format to display maps. GeoJSON supports a variety of geographic data structures like 
 Points, LineStrings and Polygons, and aditional properties like strings and numbers.
 
-The Census Bureau has made available all the Geospatial data through the TIGER Shapefiles. And all you need to create a map is in these Shapefiles.
+The Census Bureau has made available all the Geospatial data through the [TIGER Shapefiles][5]. And all you need to create a map is in these Shapefiles.
 Each zipped shapefile has the following files:
 
 - .shp the feature geometry
@@ -46,7 +46,7 @@ Each zipped shapefile has the following files:
 - .dbf the tabular attribute information
 - .prj the coordinate system information
 
-But in order to use the Census geographic data with D3.js you have to convert it to GeoJSON first.
+And in order to use the Census geographic data with D3.js you have to convert it to GeoJSON first.
 
 ###Tools of the Trade
 
@@ -89,19 +89,6 @@ Since we now know what we want and how to get it we're ready to generate our Geo
 
     ogr2ogr -f geoJSON KY-counties.json -where 'STATE="21"' gz_2010_us_050_00_20m.shp
 
-####Asynchronous Parallel File Loading
-
-{% highlight javascript %}
-var q = queue()
-    .defer(d3.json, "/geojson/KY-counties.json")
-    .defer(d3.csv, "/csv/KY-counties-pop.csv")
-    .await(ready);
-
-function ready() {
-    //Draw the map
-}
-{% endhighlight %}
-
 ###Visualization
 
 Well now we have to visualize the data on the map so I've chosen the Choropleth map visualization to represent the population for each county.
@@ -135,3 +122,5 @@ Data visualization is a lot easier than before and D3.js makes it very exciting.
 [1]: http://d3js.org
 [2]: http://www.gdal.org
 [3]: http://www.census.gov/acs/www/Downloads/handbooks/ACSGeneralHandbook.pdf
+[4]: http://www.geojson.org
+[5]: http://www.census.gov/geo/maps-data/data/tiger.html
