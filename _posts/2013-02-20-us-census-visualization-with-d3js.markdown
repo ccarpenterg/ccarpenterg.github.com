@@ -118,6 +118,8 @@ svg.append("g")
 - Unemployment rates in US (2008): [http://bl.ocks.org/mbostock/4060606][9]
 - US Airports Interactive Map: [http://mbostock.github.com/d3/talk/20111116/airports.html][10]
 
+<script src="/javascripts/d3.js">
+</script>
 <script src="/d3/KY-counties20.js">
 </script>
 
