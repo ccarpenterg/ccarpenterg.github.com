@@ -4,13 +4,53 @@
  <title>Hop.ie - Donovan Hutchinson</title>
  <link href="http://hop.ie/atom.xml" rel="self"/>
  <link href="http://hop.ie/"/>
- <updated>2013-02-28T20:53:50-03:00</updated>
+ <updated>2013-03-25T15:01:54-03:00</updated>
  <id>http://hop.ie/</id>
  <author>
    <name>Donovan Hutchinson</name>
    <email>d@hop.ie</email>
  </author>
 
+ 
+ <entry>
+   <title>Calendar Layout: Visualising Market Data</title>
+   <link href="http://hop.ie/blog/calendar-layout-visualising-market-data"/>
+   <updated>2013-03-24T00:00:00-03:00</updated>
+   <id>http://hop.ie/blog/calendar-layout-visualising-market-data</id>
+   <content type="html">&lt;div id='datavis'&gt;
+&lt;p&gt;This is a Calendar Layout of the &lt;strong&gt;Euro-US Dollar Rate&amp;#8217;s Daily Change&lt;/strong&gt; built with &lt;a href='http://d3js.org'&gt;D3.js&lt;/a&gt;. The daily change is visualized as colored cells. Values range between -4% and 4% (dark red and dark green cells). And yellow cells for values around zero.&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;p&gt;The Calendar visualization is very useful when the user wants to spot changes on a specific day. This is an advantage compared to Line Charts since it&amp;#8217;s hard to visualize more than 30 days on the x-axis in a Line Chart.&lt;/p&gt;
+
+&lt;h3 id='the_calendar_visualization'&gt;The Calendar Visualization&lt;/h3&gt;
+
+&lt;p&gt;The Calendar is a matrix-like visualization. It uses weeks as columns and days as rows. So for example, the element at (3, 10) represents a Tuesday on the 10th week of a specific year.&lt;/p&gt;
+
+&lt;p&gt;In order to draw every day you create a cell (a SVG rectangle) at each position (&lt;em&gt;x&lt;/em&gt;, &lt;em&gt;y&lt;/em&gt;), where &lt;em&gt;x&lt;/em&gt; is given by the week and &lt;em&gt;y&lt;/em&gt; is given by the day:&lt;/p&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='javascript'&gt;&lt;span class='kd'&gt;var&lt;/span&gt; &lt;span class='nx'&gt;rect&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='nx'&gt;svg&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;selectAll&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s2'&gt;&amp;quot;.day&amp;quot;&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt;
+    &lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;data&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='kd'&gt;function&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nx'&gt;d&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt; &lt;span class='k'&gt;return&lt;/span&gt; &lt;span class='nx'&gt;d3&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;time&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;days&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='k'&gt;new&lt;/span&gt; &lt;span class='nb'&gt;Date&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nx'&gt;d&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='mi'&gt;0&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='mi'&gt;1&lt;/span&gt;&lt;span class='p'&gt;),&lt;/span&gt; 
+                        &lt;span class='k'&gt;new&lt;/span&gt; &lt;span class='nb'&gt;Date&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nx'&gt;d&lt;/span&gt; &lt;span class='o'&gt;+&lt;/span&gt; &lt;span class='mi'&gt;1&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='mi'&gt;0&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='mi'&gt;1&lt;/span&gt;&lt;span class='p'&gt;));&lt;/span&gt; &lt;span class='p'&gt;})&lt;/span&gt;
+  &lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;enter&lt;/span&gt;&lt;span class='p'&gt;().&lt;/span&gt;&lt;span class='nx'&gt;append&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s2'&gt;&amp;quot;rect&amp;quot;&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt;
+    &lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;attr&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s2'&gt;&amp;quot;class&amp;quot;&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='s2'&gt;&amp;quot;day&amp;quot;&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt;
+    &lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;attr&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s2'&gt;&amp;quot;width&amp;quot;&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='nx'&gt;cellSize&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt;
+    &lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;attr&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s2'&gt;&amp;quot;height&amp;quot;&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='nx'&gt;cellSize&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt;
+    &lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;attr&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s2'&gt;&amp;quot;x&amp;quot;&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='kd'&gt;function&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nx'&gt;d&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt; &lt;span class='k'&gt;return&lt;/span&gt; &lt;span class='nx'&gt;week&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nx'&gt;d&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt; &lt;span class='o'&gt;*&lt;/span&gt; &lt;span class='nx'&gt;cellSize&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt; &lt;span class='p'&gt;})&lt;/span&gt;
+    &lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;attr&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s2'&gt;&amp;quot;y&amp;quot;&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='kd'&gt;function&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nx'&gt;d&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt; &lt;span class='k'&gt;return&lt;/span&gt; &lt;span class='nx'&gt;day&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nx'&gt;d&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt; &lt;span class='o'&gt;*&lt;/span&gt; &lt;span class='nx'&gt;cellSize&lt;/span&gt;&lt;span class='p'&gt;;&lt;/span&gt; &lt;span class='p'&gt;})&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id='further_reading'&gt;Further Reading&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href='http://bl.ocks.org/mbostock/4063318'&gt;Dow Jones historical data&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='http://mbostock.github.com/d3/talk/20111018/calendar.html'&gt;U.S. Commercial Flights&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='http://stat-computing.org/dataexpo/2009/posters/wicklin-allison.pdf'&gt;Visualising domestic airline traffic with SAS&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;script src='/javascripts/d3.js'&gt;
+&lt;/script&gt;&lt;script src='/d3/euro.js'&gt;
+&lt;/script&gt;</content>
+ </entry>
  
  <entry>
    <title>US Census Visualization with D3.js</title>
@@ -21,7 +61,7 @@
 &lt;p&gt;This is a Population Map of Kentucky Counties created using &lt;a href='http://d3js.org'&gt;D3.js&lt;/a&gt;, a Census 2010 Shapefile and &lt;a href='http://www.gdal.org'&gt;GDAL&lt;/a&gt; (for geospatial data processing), inspired by the &lt;a href='http://www.census.gov/acs/www/Downloads/handbooks/ACSGeneralHandbook.pdf'&gt;American Community Survey Handbook&lt;/a&gt;.&lt;/p&gt;
 &lt;/div&gt;
 
-&lt;p&gt;It&amp;#8217;s really easy to create a map using D3.js. You just need a GeoJSON file and you&amp;#8217;re done. Having said that you have to have a minimum skillset to process the data and a bit of experience on map projections:&lt;/p&gt;
+&lt;p&gt;It&amp;#8217;s really easy to create a map using D3.js. You just need a &lt;a href='http://www.geojson.org'&gt;GeoJSON&lt;/a&gt; file and you&amp;#8217;re done. Having said that you have to have a minimum skillset to process the data and a bit of experience on map projections:&lt;/p&gt;
 &lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='javascript'&gt;&lt;span class='kd'&gt;var&lt;/span&gt; &lt;span class='nx'&gt;projection&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='nx'&gt;d3&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;geo&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;mercator&lt;/span&gt;&lt;span class='p'&gt;()&lt;/span&gt;
     &lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;scale&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='mi'&gt;29100&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt;
     &lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;translate&lt;/span&gt;&lt;span class='p'&gt;([&lt;/span&gt;&lt;span class='mi'&gt;7310&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='mi'&gt;3500&lt;/span&gt;&lt;span class='p'&gt;]);&lt;/span&gt;
@@ -38,9 +78,9 @@
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;h3 id='census_geospatial_data_and_geojson'&gt;Census Geospatial Data and GeoJSON&lt;/h3&gt;
 
-&lt;p&gt;D3.js uses the GeoJSON format to display maps. The GeoJSON format supports a variety of geographic data structures like Points, LineStrings and Polygons, and aditional properties like strings and numbers.&lt;/p&gt;
+&lt;p&gt;D3.js uses the GeoJSON format to display maps. GeoJSON supports a variety of geographic data structures like Points, LineStrings and Polygons, and aditional properties like strings and numbers.&lt;/p&gt;
 
-&lt;p&gt;The Census Bureau has made available all the Geospatial data through the TIGER Shapefiles. And all you need to create a map is in these Shapefiles. Each zipped shapefile has the following files:&lt;/p&gt;
+&lt;p&gt;The Census Bureau has made available all the Geospatial data through the &lt;a href='http://www.census.gov/geo/maps-data/data/tiger.html'&gt;TIGER Shapefiles&lt;/a&gt;. And all you need to create a map is in these Shapefiles. Each zipped shapefile has the following files:&lt;/p&gt;
 
 &lt;ul&gt;
 &lt;li&gt;.shp the feature geometry&lt;/li&gt;
@@ -52,7 +92,7 @@
 &lt;li&gt;.prj the coordinate system information&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;But in order to use the Census geographic data with D3.js you have to convert it to GeoJSON first.&lt;/p&gt;
+&lt;p&gt;And in order to use the Census geographic data with D3.js you have to convert it to GeoJSON first.&lt;/p&gt;
 
 &lt;h3 id='tools_of_the_trade'&gt;Tools of the Trade&lt;/h3&gt;
 
@@ -60,7 +100,7 @@
 
 &lt;p&gt;When you&amp;#8217;re dealing with Geospatial data you need a tool to explore it and convert it to other formats. GDAL is shipped with two great tools to do this job: &lt;code&gt;ogrinfo&lt;/code&gt; and &lt;code&gt;ogr2ogr&lt;/code&gt;.&lt;/p&gt;
 
-&lt;p&gt;ogrinfo is very useful to explore Shapefiles:&lt;/p&gt;
+&lt;p&gt;&lt;a href='http://www.gdal.org/ogrinfo.html'&gt;ogrinfo&lt;/a&gt; is very useful to explore Shapefiles:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;ogrinfo -so gz_2010_us_050_00_20m.shp gz_2010_us_050_00_20m
 
@@ -90,23 +130,13 @@ CENSUSAREA: Real (31.15)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;ogrinfo -al gz_2010_us_050_00_20m.shp /
 -sql &amp;#39;SELECT * FROM gz_2010_us_050_00_20m where STATE=&amp;quot;21&amp;quot;&amp;#39;&lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;Since we now know what we want and how to get it we&amp;#8217;re ready to generate our GeoJSON file using ogr2ogr:&lt;/p&gt;
+&lt;p&gt;Since we now know what we want and how to get it we&amp;#8217;re ready to generate our GeoJSON file using &lt;a href='http://www.gdal.org/ogr2ogr.html'&gt;ogr2ogr&lt;/a&gt;:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;ogr2ogr -f geoJSON KY-counties.json -where &amp;#39;STATE=&amp;quot;21&amp;quot;&amp;#39; gz_2010_us_050_00_20m.shp&lt;/code&gt;&lt;/pre&gt;
 
-&lt;h4 id='asynchronous_parallel_file_loading'&gt;Asynchronous Parallel File Loading&lt;/h4&gt;
-&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='javascript'&gt;&lt;span class='kd'&gt;var&lt;/span&gt; &lt;span class='nx'&gt;q&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='nx'&gt;queue&lt;/span&gt;&lt;span class='p'&gt;()&lt;/span&gt;
-    &lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;defer&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nx'&gt;d3&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;json&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='s2'&gt;&amp;quot;/geojson/KY-counties.json&amp;quot;&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt;
-    &lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;defer&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nx'&gt;d3&lt;/span&gt;&lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;csv&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='s2'&gt;&amp;quot;/csv/KY-counties-pop.csv&amp;quot;&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt;
-    &lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;await&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nx'&gt;ready&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt;
-
-&lt;span class='kd'&gt;function&lt;/span&gt; &lt;span class='nx'&gt;ready&lt;/span&gt;&lt;span class='p'&gt;()&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt;
-    &lt;span class='c1'&gt;//Draw the map&lt;/span&gt;
-&lt;span class='p'&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;h3 id='visualization'&gt;Visualization&lt;/h3&gt;
 
-&lt;p&gt;Well now we have to visualize the data on the map so I&amp;#8217;ve chosen the Choropleth map visualization to represent the population for each county. When it comes to styles D3.js is very straightforward. First define the classes styles:&lt;/p&gt;
+&lt;p&gt;Well now we have to visualize the data on the map so I&amp;#8217;ve chosen the Choropleth map visualization to represent the population for each county. When it comes to styles D3.js is quite straightforward. First define the classes styles:&lt;/p&gt;
 &lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='css'&gt;&lt;span class='nc'&gt;.tier-1&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt; &lt;span class='n'&gt;fill&lt;/span&gt;&lt;span class='o'&gt;:&lt;/span&gt;&lt;span class='k'&gt;rgb&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='m'&gt;229&lt;/span&gt;&lt;span class='o'&gt;,&lt;/span&gt; &lt;span class='m'&gt;245&lt;/span&gt;&lt;span class='o'&gt;,&lt;/span&gt; &lt;span class='m'&gt;224&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt; &lt;span class='p'&gt;}&lt;/span&gt;
 &lt;span class='nc'&gt;.tier-2&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt; &lt;span class='n'&gt;fill&lt;/span&gt;&lt;span class='o'&gt;:&lt;/span&gt;&lt;span class='k'&gt;rgb&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='m'&gt;161&lt;/span&gt;&lt;span class='o'&gt;,&lt;/span&gt; &lt;span class='m'&gt;217&lt;/span&gt;&lt;span class='o'&gt;,&lt;/span&gt; &lt;span class='m'&gt;155&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt; &lt;span class='p'&gt;}&lt;/span&gt;
 &lt;span class='nc'&gt;.tier-3&lt;/span&gt; &lt;span class='p'&gt;{&lt;/span&gt; &lt;span class='n'&gt;fill&lt;/span&gt;&lt;span class='o'&gt;:&lt;/span&gt;&lt;span class='k'&gt;rgb&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='m'&gt;49&lt;/span&gt;&lt;span class='o'&gt;,&lt;/span&gt; &lt;span class='m'&gt;163&lt;/span&gt;&lt;span class='o'&gt;,&lt;/span&gt; &lt;span class='m'&gt;84&lt;/span&gt;&lt;span class='p'&gt;);&lt;/span&gt; &lt;span class='p'&gt;}&lt;/span&gt;
@@ -120,10 +150,17 @@ CENSUSAREA: Real (31.15)&lt;/code&gt;&lt;/pre&gt;
     &lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;attr&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s2'&gt;&amp;quot;d&amp;quot;&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='nx'&gt;path&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt;
     &lt;span class='p'&gt;.&lt;/span&gt;&lt;span class='nx'&gt;attr&lt;/span&gt;&lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='s2'&gt;&amp;quot;class&amp;quot;&lt;/span&gt;&lt;span class='p'&gt;,&lt;/span&gt; &lt;span class='kd'&gt;function&lt;/span&gt; &lt;span class='p'&gt;(&lt;/span&gt;&lt;span class='nx'&gt;d&lt;/span&gt;&lt;span class='p'&gt;)&lt;/span&gt; &lt;span class='p'&gt;{});&lt;/span&gt; &lt;span class='c1'&gt;// return the right class&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h3 id='conclusion'&gt;Conclusion&lt;/h3&gt;
+&lt;h3 id='further_reading'&gt;Further Reading&lt;/h3&gt;
 
-&lt;p&gt;Data visualization is a lot easier than before and D3.js makes it very exciting.&lt;/p&gt;
-&lt;script src='/d3/KY-counties20.js'&gt;
+&lt;ul&gt;
+&lt;li&gt;Census Bureau Data Visualization Gallery (without D3.js): &lt;a href='http://www.census.gov/dataviz/'&gt;http://www.census.gov/dataviz/&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;Unemployment rates in US (2008): &lt;a href='http://bl.ocks.org/mbostock/4060606'&gt;http://bl.ocks.org/mbostock/4060606&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;US Airports Interactive Map: &lt;a href='http://mbostock.github.com/d3/talk/20111116/airports.html'&gt;http://mbostock.github.com/d3/talk/20111116/airports.html&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;script src='/javascripts/d3.js'&gt;
+&lt;/script&gt;&lt;script src='/d3/KY-counties20.js'&gt;
 &lt;/script&gt;</content>
  </entry>
  

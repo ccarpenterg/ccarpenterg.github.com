@@ -1,0 +1,18 @@
+body {
+  shape-rendering: crispEdges;
+}
+
+.title {
+  font: 10px sans-serif;
+}
+
+.day {
+  fill: #fff;
+  stroke: #ccc;
+}
+
+.month {
+  fill: none;
+  stroke: #000;
+  stroke-width: 2px;
+}

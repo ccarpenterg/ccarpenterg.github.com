@@ -6,7 +6,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title> US Census Visualization with D3.js -  hop.ie</title>
+    <title> US Census Visualization with D3.js -  ccarpenterg Blog</title>
     <meta name="description" content="William the Conqueror ordered the compilation of the Domesday Book in 1086, the first census of England">
     <meta name="viewport" content="width=device-width">
     <link rel="stylesheet" href="/stylesheets/screen.css">
@@ -46,7 +46,7 @@
 <p>This is a Population Map of Kentucky Counties created using <a href='http://d3js.org'>D3.js</a>, a Census 2010 Shapefile and <a href='http://www.gdal.org'>GDAL</a> (for geospatial data processing), inspired by the <a href='http://www.census.gov/acs/www/Downloads/handbooks/ACSGeneralHandbook.pdf'>American Community Survey Handbook</a>.</p>
 </div>
 
-<p>It&#8217;s really easy to create a map using D3.js. You just need a GeoJSON file and you&#8217;re done. Having said that you have to have a minimum skillset to process the data and a bit of experience on map projections:</p>
+<p>It&#8217;s really easy to create a map using D3.js. You just need a <a href='http://www.geojson.org'>GeoJSON</a> file and you&#8217;re done. Having said that you have to have a minimum skillset to process the data and a bit of experience on map projections:</p>
 <div class='highlight'><pre><code class='javascript'><span class='kd'>var</span> <span class='nx'>projection</span> <span class='o'>=</span> <span class='nx'>d3</span><span class='p'>.</span><span class='nx'>geo</span><span class='p'>.</span><span class='nx'>mercator</span><span class='p'>()</span>
     <span class='p'>.</span><span class='nx'>scale</span><span class='p'>(</span><span class='mi'>29100</span><span class='p'>)</span>
     <span class='p'>.</span><span class='nx'>translate</span><span class='p'>([</span><span class='mi'>7310</span><span class='p'>,</span> <span class='mi'>3500</span><span class='p'>]);</span>
@@ -63,9 +63,9 @@
 </code></pre></div>
 <h3 id='census_geospatial_data_and_geojson'>Census Geospatial Data and GeoJSON</h3>
 
-<p>D3.js uses the GeoJSON format to display maps. The GeoJSON format supports a variety of geographic data structures like Points, LineStrings and Polygons, and aditional properties like strings and numbers.</p>
+<p>D3.js uses the GeoJSON format to display maps. GeoJSON supports a variety of geographic data structures like Points, LineStrings and Polygons, and aditional properties like strings and numbers.</p>
 
-<p>The Census Bureau has made available all the Geospatial data through the TIGER Shapefiles. And all you need to create a map is in these Shapefiles. Each zipped shapefile has the following files:</p>
+<p>The Census Bureau has made available all the Geospatial data through the <a href='http://www.census.gov/geo/maps-data/data/tiger.html'>TIGER Shapefiles</a>. And all you need to create a map is in these Shapefiles. Each zipped shapefile has the following files:</p>
 
 <ul>
 <li>.shp the feature geometry</li>
@@ -77,7 +77,7 @@
 <li>.prj the coordinate system information</li>
 </ul>
 
-<p>But in order to use the Census geographic data with D3.js you have to convert it to GeoJSON first.</p>
+<p>And in order to use the Census geographic data with D3.js you have to convert it to GeoJSON first.</p>
 
 <h3 id='tools_of_the_trade'>Tools of the Trade</h3>
 
@@ -85,7 +85,7 @@
 
 <p>When you&#8217;re dealing with Geospatial data you need a tool to explore it and convert it to other formats. GDAL is shipped with two great tools to do this job: <code>ogrinfo</code> and <code>ogr2ogr</code>.</p>
 
-<p>ogrinfo is very useful to explore Shapefiles:</p>
+<p><a href='http://www.gdal.org/ogrinfo.html'>ogrinfo</a> is very useful to explore Shapefiles:</p>
 
 <pre><code>ogrinfo -so gz_2010_us_050_00_20m.shp gz_2010_us_050_00_20m
 
@@ -115,23 +115,13 @@ CENSUSAREA: Real (31.15)</code></pre>
 <pre><code>ogrinfo -al gz_2010_us_050_00_20m.shp /
 -sql &#39;SELECT * FROM gz_2010_us_050_00_20m where STATE=&quot;21&quot;&#39;</code></pre>
 
-<p>Since we now know what we want and how to get it we&#8217;re ready to generate our GeoJSON file using ogr2ogr:</p>
+<p>Since we now know what we want and how to get it we&#8217;re ready to generate our GeoJSON file using <a href='http://www.gdal.org/ogr2ogr.html'>ogr2ogr</a>:</p>
 
 <pre><code>ogr2ogr -f geoJSON KY-counties.json -where &#39;STATE=&quot;21&quot;&#39; gz_2010_us_050_00_20m.shp</code></pre>
 
-<h4 id='asynchronous_parallel_file_loading'>Asynchronous Parallel File Loading</h4>
-<div class='highlight'><pre><code class='javascript'><span class='kd'>var</span> <span class='nx'>q</span> <span class='o'>=</span> <span class='nx'>queue</span><span class='p'>()</span>
-    <span class='p'>.</span><span class='nx'>defer</span><span class='p'>(</span><span class='nx'>d3</span><span class='p'>.</span><span class='nx'>json</span><span class='p'>,</span> <span class='s2'>&quot;/geojson/KY-counties.json&quot;</span><span class='p'>)</span>
-    <span class='p'>.</span><span class='nx'>defer</span><span class='p'>(</span><span class='nx'>d3</span><span class='p'>.</span><span class='nx'>csv</span><span class='p'>,</span> <span class='s2'>&quot;/csv/KY-counties-pop.csv&quot;</span><span class='p'>)</span>
-    <span class='p'>.</span><span class='nx'>await</span><span class='p'>(</span><span class='nx'>ready</span><span class='p'>);</span>
-
-<span class='kd'>function</span> <span class='nx'>ready</span><span class='p'>()</span> <span class='p'>{</span>
-    <span class='c1'>//Draw the map</span>
-<span class='p'>}</span>
-</code></pre></div>
 <h3 id='visualization'>Visualization</h3>
 
-<p>Well now we have to visualize the data on the map so I&#8217;ve chosen the Choropleth map visualization to represent the population for each county. When it comes to styles D3.js is very straightforward. First define the classes styles:</p>
+<p>Well now we have to visualize the data on the map so I&#8217;ve chosen the Choropleth map visualization to represent the population for each county. When it comes to styles D3.js is quite straightforward. First define the classes styles:</p>
 <div class='highlight'><pre><code class='css'><span class='nc'>.tier-1</span> <span class='p'>{</span> <span class='n'>fill</span><span class='o'>:</span><span class='k'>rgb</span><span class='p'>(</span><span class='m'>229</span><span class='o'>,</span> <span class='m'>245</span><span class='o'>,</span> <span class='m'>224</span><span class='p'>);</span> <span class='p'>}</span>
 <span class='nc'>.tier-2</span> <span class='p'>{</span> <span class='n'>fill</span><span class='o'>:</span><span class='k'>rgb</span><span class='p'>(</span><span class='m'>161</span><span class='o'>,</span> <span class='m'>217</span><span class='o'>,</span> <span class='m'>155</span><span class='p'>);</span> <span class='p'>}</span>
 <span class='nc'>.tier-3</span> <span class='p'>{</span> <span class='n'>fill</span><span class='o'>:</span><span class='k'>rgb</span><span class='p'>(</span><span class='m'>49</span><span class='o'>,</span> <span class='m'>163</span><span class='o'>,</span> <span class='m'>84</span><span class='p'>);</span> <span class='p'>}</span>
@@ -145,10 +135,17 @@ CENSUSAREA: Real (31.15)</code></pre>
     <span class='p'>.</span><span class='nx'>attr</span><span class='p'>(</span><span class='s2'>&quot;d&quot;</span><span class='p'>,</span> <span class='nx'>path</span><span class='p'>)</span>
     <span class='p'>.</span><span class='nx'>attr</span><span class='p'>(</span><span class='s2'>&quot;class&quot;</span><span class='p'>,</span> <span class='kd'>function</span> <span class='p'>(</span><span class='nx'>d</span><span class='p'>)</span> <span class='p'>{});</span> <span class='c1'>// return the right class</span>
 </code></pre></div>
-<h3 id='conclusion'>Conclusion</h3>
+<h3 id='further_reading'>Further Reading</h3>
 
-<p>Data visualization is a lot easier than before and D3.js makes it very exciting.</p>
-<script src='/d3/KY-counties20.js'>
+<ul>
+<li>Census Bureau Data Visualization Gallery (without D3.js): <a href='http://www.census.gov/dataviz/'>http://www.census.gov/dataviz/</a></li>
+
+<li>Unemployment rates in US (2008): <a href='http://bl.ocks.org/mbostock/4060606'>http://bl.ocks.org/mbostock/4060606</a></li>
+
+<li>US Airports Interactive Map: <a href='http://mbostock.github.com/d3/talk/20111116/airports.html'>http://mbostock.github.com/d3/talk/20111116/airports.html</a></li>
+</ul>
+<script src='/javascripts/d3.js'>
+</script><script src='/d3/KY-counties20.js'>
 </script></section>
 
 	<section class="tags">
